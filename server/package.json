@@ -1,0 +1,30 @@
+{
+  "name": "server",
+  "version": "1.0.50",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "bun run --watch src/index.ts",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:studio": "drizzle-kit studio"
+  },
+  "dependencies": {
+    "@libsql/client": "^0.14.0",
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.4.5",
+    "drizzle-orm": "^0.36.2",
+    "drizzle-typebox": "^0.1.1",
+    "elysia": "latest",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "bun-types": "latest",
+    "drizzle-kit": "^0.28.1",
+    "tsx": "^4.19.2"
+  },
+  "override": {
+    "@sinclair/typebox": "0.32.4"
+  },
+  "module": "src/index.js"
+}
