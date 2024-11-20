@@ -5,6 +5,7 @@ import TextInputSign from "@/app/components/textInputSign";
 import Button01 from "@/app/components/button01";
 import logo from "../../../public/image/food_10596175.png";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
     const [name, setname] = useState<string>("");
@@ -12,13 +13,14 @@ export default function Page() {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [message, setMessage] = useState<string>("");
+    const router = useRouter();
 
     const handleRegister = async (e: React.FormEvent) => {
-        e.preventDefault(); // Prevenir o reload da página
+        e.preventDefault(); 
         setMessage("");
 
         try {
-            const response = await fetch("http://localhost:3000/user", {
+            const response = await fetch("http://localhost:3000/register", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ name, cpf, email, password }),
@@ -29,6 +31,7 @@ export default function Page() {
             }
 
             setMessage("Registro realizado com sucesso!");
+            router.push('/signIn')
         } catch (error: any) {
             setMessage(`Erro: ${error.message}`);
         }

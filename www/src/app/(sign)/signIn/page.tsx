@@ -5,14 +5,16 @@ import TextInputSign from "@/app/components/textInputSign";
 import Button01 from "@/app/components/button01";
 import logo from "../../../public/image/food_10596175.png";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [message, setMessage] = useState<string>("");
+    const router = useRouter(); 
 
     const handleLogin = async (e: React.FormEvent) => {
-        e.preventDefault(); // Prevenir o reload da página
+        e.preventDefault(); 
         setMessage("");
 
         try {
@@ -27,8 +29,13 @@ export default function Page() {
             }
 
             const data = await response.json();
+
+            localStorage.setItem("token", data.token);
+
             setMessage("Login realizado com sucesso!");
-            console.log("Dados do usuário:", data);
+
+            router.push("/");
+
         } catch (error: any) {
             setMessage(`Erro: ${error.message}`);
         }
