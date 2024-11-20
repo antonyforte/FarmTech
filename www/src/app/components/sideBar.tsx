@@ -2,16 +2,22 @@
 
 import Image from "next/image";
 import MenuButton from "./menuButton";
-import menuIcon from "@/public/image/menu.png"
-import farmsIcon from "@/public/image/farmIcon.png"
-import productsIcon from "@/public/image/productIcon.png"
-import culturesIcon from "@/public/image/cultureIcon.png"
-import logoutIcon from "@/public/image/Logout.png"
+import menuIcon from "../../public/image/menu.png"
+import farmsIcon from "../../public/image/farmIcon.png"
+import productsIcon from "../../public/image/productIcon.png"
+import culturesIcon from "../../public/image/cultureIcon.png"
+import logoutIcon from "../../public/image/logout.png"
 import { useRouter } from "next/navigation";
 
 export default function SideBar(props : any) {
     
     const router = useRouter();
+
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+
+        router.push('/');
+    };
 
     function handleChangePage(path: string){
         router.push(path);
@@ -51,7 +57,7 @@ export default function SideBar(props : any) {
                 text= "Sair"
                 image= {logoutIcon}
                 width= "w-[150px]"
-                handler= {() => {handleChangePage("/")}}
+                handler= {handleLogout}
                 />
             </div>
         </div>

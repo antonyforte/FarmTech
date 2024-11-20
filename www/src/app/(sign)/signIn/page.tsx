@@ -5,29 +5,16 @@ import TextInputSign from "@/app/components/textInputSign";
 import Button01 from "@/app/components/button01";
 import logo from "../../../public/image/food_10596175.png";
 import { useState } from "react";
-<<<<<<< HEAD
-import { useRouter } from "next/navigation";
-=======
-import { useRouter} from "next/navigation";
->>>>>>> 7fc50c9cddc6a2ec691655e80684ad6b2fd3ae73
+import { useRouter } from "next/navigation"; // Usar para redirecionamento
 
 export default function Page() {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [message, setMessage] = useState<string>("");
-<<<<<<< HEAD
-    const router = useRouter(); 
-=======
-    
-    const router = useRouter();
-
-    function handleChangePage(path: string){
-        router.push(path);
-    }
->>>>>>> 7fc50c9cddc6a2ec691655e80684ad6b2fd3ae73
+    const router = useRouter(); // Hook do Next.js para redirecionamento
 
     const handleLogin = async (e: React.FormEvent) => {
-        e.preventDefault(); 
+        e.preventDefault();
         setMessage("");
 
         try {
@@ -42,13 +29,9 @@ export default function Page() {
             }
 
             const data = await response.json();
-
-            localStorage.setItem("token", data.token);
-
+            localStorage.setItem("token", data.token); // Salvar o token JWT
             setMessage("Login realizado com sucesso!");
-
-            router.push("/");
-
+            router.push("/dashboard"); // Redirecionar para o dashboard
         } catch (error: any) {
             setMessage(`Erro: ${error.message}`);
         }
@@ -76,7 +59,7 @@ export default function Page() {
                     placeholder="Digite sua senha"
                     handler={(e: React.FormEvent<HTMLInputElement>) => setPassword(e.currentTarget.value)}
                 />
-                <Button01 text="Entrar" handler={() => handleChangePage("/dashboard")}/>
+                <Button01 text="Entrar" path="#" />
             </form>
             {message && <p className="text-center mt-4 text-red-500">{message}</p>}
         </>
