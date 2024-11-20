@@ -5,11 +5,18 @@ import TextInputSign from "@/app/components/textInputSign";
 import Button01 from "@/app/components/button01";
 import logo from "../../../public/image/food_10596175.png";
 import { useState } from "react";
+import { useRouter} from "next/navigation";
 
 export default function Page() {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [message, setMessage] = useState<string>("");
+    
+    const router = useRouter();
+
+    function handleChangePage(path: string){
+        router.push(path);
+    }
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault(); // Prevenir o reload da página
@@ -56,7 +63,7 @@ export default function Page() {
                     placeholder="Digite sua senha"
                     handler={(e: React.FormEvent<HTMLInputElement>) => setPassword(e.currentTarget.value)}
                 />
-                <Button01 text="Entrar" path="#" />
+                <Button01 text="Entrar" handler={() => handleChangePage("/dashboard")}/>
             </form>
             {message && <p className="text-center mt-4 text-red-500">{message}</p>}
         </>

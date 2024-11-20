@@ -1,18 +1,18 @@
 "use client"
 
 import Image from "next/image";
-import { useRouter } from 'next/navigation';
 import Button01 from "./components/button01";
 import logo from "../public/image/food_10596175.png";
 import mark from "../public/image/Group.png";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
+  
   const router = useRouter();
 
   function handleChangePage(path: string){
       router.push(path);
   }
-
 
   return (
    <div className="flex-wrap bg-landscape-sunset-clear-day w-screen h-screen">
@@ -29,7 +29,7 @@ export default function Page() {
         <div className="flex flex-wrap mr-[30px] relative justify-between w-[345px] justify-self-end">
           <Button01
           text= "Entrar"
-          path= "/signIn"
+          handler= {() => {handleChangePage("/signIn")}}
           />
           <Button01
           text= "Registrar"
