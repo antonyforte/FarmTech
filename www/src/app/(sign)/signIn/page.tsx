@@ -5,13 +5,26 @@ import TextInputSign from "@/app/components/textInputSign";
 import Button01 from "@/app/components/button01";
 import logo from "../../../public/image/food_10596175.png";
 import { useState } from "react";
+<<<<<<< HEAD
 import { useRouter } from "next/navigation";
+=======
+import { useRouter} from "next/navigation";
+>>>>>>> 7fc50c9cddc6a2ec691655e80684ad6b2fd3ae73
 
 export default function Page() {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [message, setMessage] = useState<string>("");
+<<<<<<< HEAD
     const router = useRouter(); 
+=======
+    
+    const router = useRouter();
+
+    function handleChangePage(path: string){
+        router.push(path);
+    }
+>>>>>>> 7fc50c9cddc6a2ec691655e80684ad6b2fd3ae73
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault(); 
@@ -63,7 +76,7 @@ export default function Page() {
                     placeholder="Digite sua senha"
                     handler={(e: React.FormEvent<HTMLInputElement>) => setPassword(e.currentTarget.value)}
                 />
-                <Button01 text="Entrar" path="#" />
+                <Button01 text="Entrar" handler={() => handleChangePage("/dashboard")}/>
             </form>
             {message && <p className="text-center mt-4 text-red-500">{message}</p>}
         </>
