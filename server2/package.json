@@ -1,0 +1,21 @@
+{
+  "name": "server2",
+  "module": "src/index.ts",
+  "scripts": {
+    "dev": "bun run --watch src/server.ts"
+  },
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest",
+    "prisma": "^5.22.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@fastify/cors": "^10.0.1",
+    "@prisma/client": "5.22.0",
+    "fastify": "^5.1.0",
+    "zod": "^3.23.8"
+  }
+}

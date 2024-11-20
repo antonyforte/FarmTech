@@ -1,0 +1,11 @@
+POST http://localhost:3333/user
+Content-Type: application/json
+
+{
+
+    "name": "testuser",
+    "cpf": "12345678901",
+    "email": "testuser@email.com",
+    "password": "password123"
+
+}

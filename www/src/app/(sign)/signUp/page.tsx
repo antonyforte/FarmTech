@@ -7,7 +7,7 @@ import logo from "../../../public/image/food_10596175.png";
 import { useState } from "react";
 
 export default function Page() {
-    const [username, setUsername] = useState<string>("");
+    const [name, setname] = useState<string>("");
     const [cpf, setCPF] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
@@ -18,10 +18,10 @@ export default function Page() {
         setMessage("");
 
         try {
-            const response = await fetch("http://localhost:3000/register", {
+            const response = await fetch("http://localhost:3000/user", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ username, cpf, email, password }),
+                body: JSON.stringify({ name, cpf, email, password }),
             });
 
             if (!response.ok) {
@@ -45,10 +45,10 @@ export default function Page() {
                 onSubmit={handleRegister}
             >
                 <TextInputSign
-                    value={username}
+                    value={name}
                     text="Nome"
                     placeholder="Digite seu nome"
-                    handler={(e: React.FormEvent<HTMLInputElement>) => setUsername(e.currentTarget.value)}
+                    handler={(e: React.FormEvent<HTMLInputElement>) => setname(e.currentTarget.value)}
                 />
                 <TextInputSign
                     value={cpf}
