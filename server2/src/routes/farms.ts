@@ -3,8 +3,17 @@ import { prisma } from '../lib/prisma'
 import { z } from 'zod'
 
 export async function farmRoutes(app : FastifyInstance) {
-    app.get('/farms', async () => {
-        const farms = await prisma.farm.findMany()
+    app.get('/', async (request, reply) => {
+        const usercpf = request.user?.usercpf;
+
+        if(!usercpf){
+            return reply.status(401).send({ message: 'Usuário não autenticado'});
+        }
+
+        const farms = await prisma.farm.findMany({
+            where: { usercpf },
+        })
+
 
         return farms.map((farm) => {
             return{
@@ -17,7 +26,9 @@ export async function farmRoutes(app : FastifyInstance) {
         })
     })
 
-    app.post('/farms', async (request) => {
+    app.post('/', async (request, reply) => {
+        console.log("Chegou7")
+
         const bodySchema = z.object({
             proprietar: z.string(),
             endereco: z.string(),
@@ -26,6 +37,12 @@ export async function farmRoutes(app : FastifyInstance) {
         })
 
         const { proprietar, endereco, tamanho, clima } = bodySchema.parse(request.body)
+        const usercpf = request.user?.usercpf;
+
+        if (!usercpf) {
+            return reply.status(401).send({ message: 'Usuário não autenticado' });
+
+        }
 
         const farm = await prisma.farm.create({
             data: {
@@ -33,10 +50,10 @@ export async function farmRoutes(app : FastifyInstance) {
                 endereco,
                 tamanho,
                 clima,
-                usercpf: '12345678901'
-            }
-        })
+                usercpf,
+            },
+        });
 
-        return farm
+        return farm;
     })
 }
