@@ -2,3 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+.text-stroke {
+    -webkit-text-stroke-color: black;
+    -webkit-text-stroke-width: 1px;
+}
+
+.bg-landscape-sunset-clear-day {
+    background-image: url('../public/image/landscape-sunset-clear-day.png');
+    background-size: cover;
+}
+
+.bg-background01 {
+    background-image: url('../public/image/background01.png');
+    background-size: cover;
+}
