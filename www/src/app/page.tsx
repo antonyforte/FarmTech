@@ -23,7 +23,7 @@ export default function Page() {
         </div>
         <div className="flex flex-wrap relative justify-between text-3xl text-white text-stroke font-bold w-[400px] justify-self-center">
           <h1 className="hover:border-b-[2px] hover:border-orange-500">Home</h1>
-          <h1 className="hover:border-b-[2px] hover:border-orange-500">Contrato</h1>
+          <h1 className="hover:border-b-[2px] hover:border-orange-500">Contato</h1>
           <h1 className="hover:border-b-[2px] hover:border-orange-500">UFSJ</h1>
         </div>
         <div className="flex flex-wrap mr-[30px] relative justify-between w-[345px] justify-self-end">
@@ -33,7 +33,8 @@ export default function Page() {
           />
           <Button01
           text= "Registrar"
-          path= "/signUp"
+          handler= {() => {handleChangePage("/signUp")}}
+
           />
         </div>
       </div>

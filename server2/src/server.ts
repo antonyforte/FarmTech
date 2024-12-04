@@ -2,6 +2,7 @@ import fastify from 'fastify';
 import cors from '@fastify/cors';
 import { farmRoutes } from './routes/farms';
 import { userRoutes } from './routes/users';
+import { usersAccountsRoutes } from './routes/usersAccount';
 import jwt from 'jsonwebtoken';
 import type { CustomJwtPayload } from './lib/customJwtPayload'; // Importando o tipo, se necessário
 
@@ -11,7 +12,27 @@ app.register(cors, {
     origin: true,
 });
 app.register(userRoutes); // Registrar rotas de usuários sem proteção
+app.register(usersAccountsRoutes,{
+    preHandler: async (request: any, reply: any) => {
+        const token = request.headers['authorization']?.split(' ')[1];
 
+        if (!token) {
+            return reply.status(401).send({ message: 'Token não fornecido'});
+        }
+
+        try {
+            const decoded = jwt.verify(token, 'crop-king');
+            if (typeof decoded === 'object' && decoded !== null) {
+                request.user = decoded as CustomJwtPayload;
+            } else {
+                return reply.status(401).send({ message: 'Token inválido' });
+            }
+        } catch (err) {
+            return reply.status(401).send({ message: 'Token inválido' });
+        }
+
+    }
+})
 app.register(farmRoutes, { 
     prefix: '/farms', 
     // Rotas de fazenda terão autenticação via JWT
