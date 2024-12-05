@@ -57,60 +57,57 @@ export async function farmRoutes(app : FastifyInstance) {
         return farm;
     })
 
-    app.put('/edit/:id', async(request, reply) => {
+    app.put("/edit/:id", async (request, reply) => {
         const paramsSchema = z.object({
-            cpf: z.string(),
-            id: z.number(),
+            id: z.string().uuid("O ID deve ser um UUID válido."),
         });
+
         const bodySchema = z.object({
-            proprietar: z.string(),
-            endereco: z.string(),
-            tamanho: z.number(),
-            clima: z.string(),
-        })
+            proprietar: z.string().optional(),
+            endereco: z.string().optional(),
+            tamanho: z.number().positive("Tamanho deve ser maior que 0.").optional(),
+            clima: z.string().optional(),
+        });
 
-        const { cpf } = paramsSchema.parse(request.user?.usercpf);
-        const { id } = paramsSchema.parse(request.id);
+        const { id } = paramsSchema.parse(request.params); // Valida o ID nos parâmetros
+        const { proprietar, endereco, tamanho, clima } = bodySchema.parse(request.body); // Valida o corpo da requisição
+        const usercpf = request.user?.usercpf;
 
-        if(!cpf){
-            return reply.status(401).send({ message: 'Usuário não autenticado'});
+        if (!usercpf) {
+            return reply.status(401).send({ message: "Usuário não autenticado" });
         }
-
-        const { proprietar, endereco, tamanho } = bodySchema.parse(request.body);
 
         try {
             const updatedFarm = await prisma.farm.update({
                 where: { id },
-                data: { proprietar, endereco, tamanho},
+                data: { proprietar, endereco, tamanho, clima },
             });
             return reply.status(200).send(updatedFarm);
         } catch (error) {
-            return reply.status(400).send({ message: "Erro ao atualizar Fazenda."});
+            return reply.status(400).send({ message: "Erro ao atualizar Fazenda." });
         }
     });
 
-    app.delete('/delete/:id', async(request,reply) => {
-
+    // Rota DELETE: Deleta uma fazenda pelo ID
+    app.delete("/delete/:id", async (request, reply) => {
         const paramsSchema = z.object({
-            cpf: z.string(),
-            id: z.number(),
+            id: z.string().uuid("O ID deve ser um UUID válido."),
         });
 
-        const { cpf } = paramsSchema.parse(request.user?.usercpf);
-        const { id } = paramsSchema.parse(request.id);
+        const { id } = paramsSchema.parse(request.params); // Valida o ID nos parâmetros
+        const usercpf = request.user?.usercpf;
 
-        if(!cpf){
-            return reply.status(401).send({ message: 'Usuário não autenticado'});
+        if (!usercpf) {
+            return reply.status(401).send({ message: "Usuário não autenticado" });
         }
 
         try {
             await prisma.farm.delete({
-                where: {id},
+                where: { id },
             });
-            return reply.status(200).send({message: "Fazenda deletada com sucesso"})
+            return reply.status(200).send({ message: "Fazenda deletada com sucesso" });
         } catch (error) {
-            reply.status(400).send({message: "Erro ao deletar Fazenda"})
+            return reply.status(400).send({ message: "Erro ao deletar Fazenda" });
         }
-
-    })
+    });
 }
