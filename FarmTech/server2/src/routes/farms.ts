@@ -59,7 +59,7 @@ export async function farmRoutes(app : FastifyInstance) {
 
     app.put("/edit/:id", async (request, reply) => {
         const paramsSchema = z.object({
-            id: z.string().uuid("O ID deve ser um UUID válido."),
+            id: z.coerce.number(),
         });
 
         const bodySchema = z.object({
@@ -91,7 +91,7 @@ export async function farmRoutes(app : FastifyInstance) {
     // Rota DELETE: Deleta uma fazenda pelo ID
     app.delete("/delete/:id", async (request, reply) => {
         const paramsSchema = z.object({
-            id: z.string().uuid("O ID deve ser um UUID válido."),
+            id: z.coerce.number(),
         });
 
         const { id } = paramsSchema.parse(request.params); // Valida o ID nos parâmetros

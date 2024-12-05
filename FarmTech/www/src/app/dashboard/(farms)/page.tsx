@@ -1,7 +1,7 @@
 'use client';
 
-import add from "@/public/image/Add.png"
-import opt from "@/public/image/m0.png"
+const add = "/image/Add.png"
+const opt = "/public/image/m0.png"
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Button02 from "@/app/components/button02";
@@ -18,7 +18,7 @@ export default function Page() {
         const fetchFarms = async () => {
             try {
                 const token = localStorage.getItem('token');
-                if (token) {
+                if (!token) {
                     router.push("/signIn"); // Redireciona para login se não estiver autenticado
                 }
                 const response = await fetch('http://localhost:3000/farms', {

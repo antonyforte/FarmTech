@@ -47,33 +47,39 @@ export async function userRoutes(app : FastifyInstance) {
         return user
     })
 
-    app.post('/login', async (request) => {
+    app.post('/login', async (request, reply) => {
         const bodySchema = z.object({
             email: z.string(),
             password: z.string(),
         })
 
-        const { email, password } = bodySchema.parse(request.body)
+        try{
+            const { email, password } = bodySchema.parse(request.body)
 
-        // Verificar se o usuário existe
-        const user = await prisma.user.findUnique({
-            where: { email }
-        })
+            // Verificar se o usuário existe
+            const user = await prisma.user.findUnique({
+                where: { email }
+            })
 
-        if (!user) {
-            throw new Error('Usuário não encontrado')
+            if (!user) {
+                throw new Error('Usuário não encontrado')
+            }
+
+            // Verificar se a senha está correta
+            const isPasswordValid = await bcrypt.compare(password, user.password)
+
+            if (!isPasswordValid) {
+                throw new Error('Credenciais inválidas')
+            }
+
+            // Gerar o token JWT
+            const token = jwt.sign({ usercpf: user.cpf }, JWT_SECRET, { expiresIn: '1h' })
+            console.log(token)
+
+            return reply.send({token});
+        } catch (error) {
+            return reply.status(400).send({message : 'Erro ao processar login'})
         }
-
-        // Verificar se a senha está correta
-        const isPasswordValid = await bcrypt.compare(password, user.password)
-
-        if (!isPasswordValid) {
-            throw new Error('Credenciais inválidas')
-        }
-
-        // Gerar o token JWT
-        const token = jwt.sign({ usercpf: user.cpf }, JWT_SECRET, { expiresIn: '1h' })
-
-        return { token }
+        
     })
 }

@@ -5,6 +5,8 @@ import { userRoutes } from './routes/users';
 import { usersAccountsRoutes } from './routes/usersAccount';
 import jwt from 'jsonwebtoken';
 import type { CustomJwtPayload } from './lib/customJwtPayload'; // Importando o tipo, se necessário
+import { config } from "dotenv"
+
 
 const app = fastify();
 
