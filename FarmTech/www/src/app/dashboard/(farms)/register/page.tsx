@@ -46,7 +46,7 @@ export default function Page() {
 
     return (
         <form onSubmit={handleSubmit}>
-            <div className='flex flex-col h-[450px] w-[1000px] items-center text-3xl text-white bg-neutral-700 pt-[40px] pl-[80px] mt-[80px] ml-[120px]'>
+            <div className='flex flex-col h-[520px] w-[1000px] items-center text-3xl text-white bg-neutral-700 pt-[40px] pl-[80px] mt-[80px] ml-[120px]'>
                 <h1 className='text-4xl font-bold mb-[40px]'>Nova Fazenda</h1>
                 <div className='flex flex-col w-[920px]'>
                     <TextInputFarm01
