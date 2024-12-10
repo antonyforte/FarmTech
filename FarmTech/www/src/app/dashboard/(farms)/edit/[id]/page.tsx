@@ -6,7 +6,7 @@ import NumberInputFarm01 from '@/app/components/numberInputFarm01';
 import SelectInput from '@/app/components/selectInputFarm';
 import Button01 from '@/app/components/button01';
 
-export default function Page() {
+export default function Page({ params }: { params: { id: number } }) {
     const [proprietar, setProprietar] = useState('');
     const [endereco, setEndereco] = useState('');
     const [tamanho, setTamanho] = useState<number | ''>('');
@@ -14,7 +14,7 @@ export default function Page() {
     const [message, setMessage] = useState('');
 
     const climas : string[] = ["Serrado", "Canga"];
-    const index = parseInt(params.id);
+    console.log(params.id)
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -22,8 +22,8 @@ export default function Page() {
 
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:3000/farms', {
-                method: 'POST',
+            const response = await fetch('http://localhost:3000/farms/edit/'+index, {
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
@@ -47,7 +47,7 @@ export default function Page() {
 
     return (
         <form onSubmit={handleSubmit}>
-            <div className='flex flex-col h-[450px] w-[1000px] items-center text-3xl text-white bg-neutral-700 pt-[40px] pl-[80px] mt-[80px] ml-[120px]'>
+            <div className='flex flex-col h-[550px] w-[1000px] items-center text-3xl text-white bg-neutral-700 pt-[40px] pl-[80px] mt-[80px] ml-[120px]'>
                 <h1 className='text-4xl font-bold mb-[40px]'>Editar Fazenda</h1>
                 <div className='flex flex-col w-[920px]'>
                     <TextInputFarm01
@@ -64,7 +64,7 @@ export default function Page() {
                         <NumberInputFarm01
                         text="Tamanho (hectares)"
                         value={tamanho}
-                        onChange={(e : React.FormEvent<HTMLInputElement>) => setTamanho(e.currentTarget.valueAsNumber)}
+                        handler={(e : React.FormEvent<HTMLInputElement>) => setTamanho(e.currentTarget.valueAsNumber)}
                         />
                         <SelectInput
                         text="Clima"

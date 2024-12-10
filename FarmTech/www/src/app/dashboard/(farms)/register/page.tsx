@@ -60,12 +60,12 @@ export default function Page() {
                     handler={(e : React.FormEvent<HTMLInputElement>) => setEndereco(e.currentTarget.value)}
                     />
                     <div className='flex flex-inline'>
-                        <TextInputFarm01
+                        <NumberInputFarm01
                         text="Tamanho (hectares)"
                         value={tamanho}
-                        onChange={(e : React.FormEvent<HTMLInputElement>) => setTamanho(e.currentTarget.valueAsNumber)}
+                        handler={(e : React.FormEvent<HTMLInputElement>) => setTamanho(e.currentTarget.valueAsNumber)}
                         />
-                        <TextInputFarm01
+                        <SelectInput
                         text="Clima"
                         value={clima}
                         options={climas}

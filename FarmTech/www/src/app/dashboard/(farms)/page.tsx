@@ -1,8 +1,10 @@
 'use client';
 
-const add = "/image/Add.png"
-const opt = "/public/image/m0.png"
+
 import { useEffect, useState } from "react";
+import add from "@/public/image/add.png"
+import opt from "@/public/image/m0.png"
+
 import { useRouter } from "next/navigation";
 import Button02 from "@/app/components/button02";
 import SearchBar from "@/app/components/searchBar";
@@ -73,14 +75,17 @@ export default function Page() {
                 placeholder="Digite o nome da fazenda..."
                 />
             </div>
-            <div className="flex mt-[50px]">
-                <Farm
-                id= "4"
-                name= "po"
-                owner= "tt"
-                size= "4"
-                local= "Rua algusta"
-                />
+            <div className="flex flex-col mt-[50px]">
+                {farms.map(e => {
+                    return(
+                        <Farm
+                        name={"Fazenda"}
+                        id={e.id}
+                        owner={e.proprietar}
+                        size={e.tamanho}
+                        local={e.endereco}/>
+                    )
+                })}
             </div>
         </div>
     );

@@ -14,7 +14,7 @@ export default function Farm(props : any) {
     }
 
     function handleEdit() {
-        const path = '/dashboard/edit/' + props.id;
+        const path : string = '/dashboard/edit/' + props.id;
         router.push(path);
     }
 
