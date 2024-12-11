@@ -5,7 +5,7 @@ export default function TextInputSign(props: any) {
             <input
             value={props.value} 
             onChange={props.handler}  
-            type="text" 
+            type={props.type == null ? "text" : props.type} 
             placeholder={props.placeholder}
             className="ml-[5px] pl-[15px] h-[34px] border-[1px] border-slate-900 w-[563px]"
             />

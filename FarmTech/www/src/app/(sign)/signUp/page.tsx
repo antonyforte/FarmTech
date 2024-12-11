@@ -72,6 +72,7 @@ export default function Page() {
                 />
                 <TextInputSign
                     value={password}
+                    type={"password"}
                     text="Senha"
                     placeholder="Digite sua senha"
                     handler={(e: React.FormEvent<HTMLInputElement>) => setPassword(e.currentTarget.value)}

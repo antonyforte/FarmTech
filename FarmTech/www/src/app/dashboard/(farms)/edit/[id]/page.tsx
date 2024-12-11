@@ -1,12 +1,15 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import TextInputFarm01 from '@/app/components/textInputFarm01';
 import NumberInputFarm01 from '@/app/components/numberInputFarm01';
 import SelectInput from '@/app/components/selectInputFarm';
 import Button01 from '@/app/components/button01';
 
 export default function Page({ params }: { params: { id: number } }) {
+    const router = useRouter();
+
     const [proprietar, setProprietar] = useState('');
     const [endereco, setEndereco] = useState('');
     const [tamanho, setTamanho] = useState<number | ''>('');
@@ -14,7 +17,6 @@ export default function Page({ params }: { params: { id: number } }) {
     const [message, setMessage] = useState('');
 
     const climas : string[] = ["Serrado", "Canga"];
-    console.log(params.id)
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -22,7 +24,7 @@ export default function Page({ params }: { params: { id: number } }) {
 
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:3000/farms/edit/'+index, {
+            const response = await fetch('http://localhost:3000/farms/edit/'+params.id, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -35,11 +37,8 @@ export default function Page({ params }: { params: { id: number } }) {
                 throw new Error(await response.text());
             }
 
-            setMessage('Fazenda criada com sucesso!');
-            setProprietar('');
-            setEndereco('');
-            setTamanho('');
-            setClima('');
+            setMessage('Fazenda editada com sucesso!');
+            router.push("/dashboard")
         } catch (error: any) {
             setMessage(`Erro: ${error.message}`);
         }
