@@ -2,6 +2,7 @@ import fastify from 'fastify';
 import cors from '@fastify/cors';
 import { farmRoutes } from './routes/farms';
 import { userRoutes } from './routes/users';
+import { cultureRoutes } from './routes/cultures';
 import { usersAccountsRoutes } from './routes/usersAccount';
 import jwt from 'jsonwebtoken';
 import type { CustomJwtPayload } from './lib/customJwtPayload'; // Importando o tipo, se necessário
@@ -55,6 +56,29 @@ app.register(farmRoutes, {
             }
         } catch (err) {
             return reply.status(401).send({ message: 'Token inválido' });
+        }
+    }
+});
+
+app.register(cultureRoutes, {
+    preHandler: async (request: any, reply: any) => {
+        const token = request.headers['authorization']?.split(' ')[1];
+        console.log("Chegou2")
+        if (!token) {
+            return reply.status(401).send({ message: 'Token não fornecido' });
+        }
+
+        try {
+            const decoded = jwt.verify(token, 'crop-king');
+
+            if (typeof decoded === 'object' && decoded !== null){
+                request.user = decoded as CustomJwtPayload;
+            } else {
+                return reply.status(401).send({ message: 'Token inválido' });
+            }
+            
+        } catch (err) {
+            return reply.status(401).send({ message: 'Token inválido' })
         }
     }
 });
