@@ -1,11 +1,2 @@
-POST http://localhost:3333/user
-Content-Type: application/json
-
-{
-
-    "name": "testuser",
-    "cpf": "12345678901",
-    "email": "testuser@email.com",
-    "password": "password123"
-
-}
+DELETE http://localhost:3000/farms/7/delete/1 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiNDMyMyIsImlhdCI6MTczMzk0MjY2NywiZXhwIjoxNzMzOTQ2MjY3fQ.xisUeo3CdlcSFpNMrOfy7CRNWjsnAUfqDC5QlNPBlME
