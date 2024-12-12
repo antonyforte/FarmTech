@@ -3,6 +3,8 @@ import { prisma } from '../lib/prisma'
 import { z } from 'zod'
 
 export async function farmRoutes(app : FastifyInstance) {
+
+    
     app.get('/', async (request, reply) => {
         const usercpf = request.user?.usercpf;
 
@@ -24,6 +26,31 @@ export async function farmRoutes(app : FastifyInstance) {
                 clima: farm.clima,
             }
         })
+    })
+
+    app.get('/:farmid',async (request, reply) => {
+
+        const usercpf = request.user?.usercpf;
+
+        
+        const paramsSchema = z.object({
+            id: z.coerce.number(),
+        });
+
+        const { id } = paramsSchema.parse(request.params); 
+
+        if (!usercpf) {
+            return reply.status(401).send({ message: "Usuário não autenticado" });
+        }
+
+        try {
+            const updatedFarm = await prisma.farm.findUnique({
+                where: { id },
+            });
+            return reply.status(200).send(updatedFarm);
+        } catch (error) {
+            return reply.status(400).send({ message: "Erro ao atualizar Fazenda." });
+        }
     })
 
     app.post('/', async (request, reply) => {
