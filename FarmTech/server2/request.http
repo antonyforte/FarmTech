@@ -1,2 +1,117 @@
-DELETE http://localhost:3000/farms/7/delete/1 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiNDMyMyIsImlhdCI6MTczMzk0MjY2NywiZXhwIjoxNzMzOTQ2MjY3fQ.xisUeo3CdlcSFpNMrOfy7CRNWjsnAUfqDC5QlNPBlME
+### Testando as rotas de Culture
+
+# GET - Lista todas as cultures de uma fazenda específica
+GET http://localhost:3000/farms/6/cultures
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiNDMyMyIsImlhdCI6MTczNDU0NjgzMiwiZXhwIjoxNzM0NTUwNDMyfQ.SReLCUX34VcTTmEZeYL4NuW7sn17uNKiA23YpVvFzC0
+
+###
+
+# POST - Cria uma nova culture em uma fazenda
+POST http://localhost:3000/farms/6/cultures
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiNDMyMyIsImlhdCI6MTczNDU0NjgzMiwiZXhwIjoxNzM0NTUwNDMyfQ.SReLCUX34VcTTmEZeYL4NuW7sn17uNKiA23YpVvFzC0
+Content-Type: application/json
+
+{
+  "local": "Campo Norte",
+  "qtd": 50,
+  "agricultureid": 3
+}
+
+###
+
+# PUT - Atualiza uma culture específica
+PUT http://localhost:3000/farms/6/cultures/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiNDMyMyIsImlhdCI6MTczNDU0NjgzMiwiZXhwIjoxNzM0NTUwNDMyfQ.SReLCUX34VcTTmEZeYL4NuW7sn17uNKiA23YpVvFzC0
+Content-Type: application/json
+
+{
+  "local": "Campo Sul",
+  "qtd": 60
+}
+
+###
+
+# DELETE - Deleta uma culture específica
+DELETE http://localhost:3000/farms/6/cultures/3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiNDMyMyIsImlhdCI6MTczNDU0NjgzMiwiZXhwIjoxNzM0NTUwNDMyfQ.SReLCUX34VcTTmEZeYL4NuW7sn17uNKiA23YpVvFzC0
+
+###
+
+### Testando as rotas de Agriculture
+
+# GET - Lista todas as agriculturas disponíveis
+GET http://localhost:3000/agricultures
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiNDMyMyIsImlhdCI6MTczNDU0NjgzMiwiZXhwIjoxNzM0NTUwNDMyfQ.SReLCUX34VcTTmEZeYL4NuW7sn17uNKiA23YpVvFzC0
+Content-Type: application/json
+
+###
+
+# POST - Cria uma nova agricultura
+POST http://localhost:3000/agricultures
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiNDMyMyIsImlhdCI6MTczNDU0NjgzMiwiZXhwIjoxNzM0NTUwNDMyfQ.SReLCUX34VcTTmEZeYL4NuW7sn17uNKiA23YpVvFzC0
+Content-Type: application/json
+
+{
+  "nome": "Milho",
+  "valor_unid": 5,
+  "neces_clima": "Tropical" 
+}
+
+###
+
+# PUT - Atualiza uma agricultura específica
+PUT http://localhost:3000/agricultures/edit/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiNDMyMyIsImlhdCI6MTczNDU0NjgzMiwiZXhwIjoxNzM0NTUwNDMyfQ.SReLCUX34VcTTmEZeYL4NuW7sn17uNKiA23YpVvFzC0
+Content-Type: application/json
+
+{
+  "nome": "Soja",
+  "valor_unid": 3,
+  "neces_clima": "Outono" 
+}
+
+###
+
+# DELETE - Deleta uma agricultura específica
+DELETE http://localhost:3000/agricultures/delete/3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiNDMyMyIsImlhdCI6MTczNDU0NjgzMiwiZXhwIjoxNzM0NTUwNDMyfQ.SReLCUX34VcTTmEZeYL4NuW7sn17uNKiA23YpVvFzC0
+
+
+###
+
+### Testando as rotas de Product
+
+# GET - Lista todos os produtos
+GET http://localhost:3000/products
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiNDMyMyIsImlhdCI6MTczNDU0NjgzMiwiZXhwIjoxNzM0NTUwNDMyfQ.SReLCUX34VcTTmEZeYL4NuW7sn17uNKiA23YpVvFzC0
+Content-Type: application/json
+
+###
+
+# POST - Cria um novo produto
+POST http://localhost:3000/products
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiNDMyMyIsImlhdCI6MTczNDU0NjgzMiwiZXhwIjoxNzM0NTUwNDMyfQ.SReLCUX34VcTTmEZeYL4NuW7sn17uNKiA23YpVvFzC0
+Content-Type: application/json
+
+{
+  "nome": "Fertilizante X",
+  "preco": 120.50
+}
+
+###
+
+# PUT - Atualiza um produto específico
+PUT http://localhost:3000/products/edit/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiNDMyMyIsImlhdCI6MTczNDU0NjgzMiwiZXhwIjoxNzM0NTUwNDMyfQ.SReLCUX34VcTTmEZeYL4NuW7sn17uNKiA23YpVvFzC0
+Content-Type: application/json
+
+{
+  "nome": "Fertilizante Premium",
+  "preco": 150.00
+}
+
+###
+
+# DELETE - Deleta um produto específico
+DELETE http://localhost:3000/products/delete/3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiNDMyMyIsImlhdCI6MTczNDU0NjgzMiwiZXhwIjoxNzM0NTUwNDMyfQ.SReLCUX34VcTTmEZeYL4NuW7sn17uNKiA23YpVvFzC0
