@@ -1,10 +1,8 @@
 'use client';
 
-
-import { useEffect, useState } from "react";
-import add from "@/public/image/add.png"
+import add from "@/public/image/Add.png"
 import opt from "@/public/image/m0.png"
-
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Button02 from "@/app/components/button02";
 import SearchBar from "@/app/components/searchBar";
@@ -58,8 +56,8 @@ export default function Page() {
 
 
     return (
-        <div className="flex flex-col ml-[104px] mt-[50px]">
-            <div className="flex h-[70px] w-[1000px] mb-[30px] items-center">
+        <div className="flex flex-col ml-[104px] pt-[40px]">
+            <div className="flex h-[70px] w-[1000px] items-center">
                 <Button02
                 img = {add}
                 handler = {() => {handleAddButton()}}
@@ -77,15 +75,16 @@ export default function Page() {
             </div>
             <div className="flex flex-col mt-[50px]">
                 {farms.map(e => {
-                    return(
-                        <Farm
-                        name={"Fazenda"}
-                        id={e.id}
-                        owner={e.proprietar}
-                        size={e.tamanho}
-                        local={e.endereco}/>
-                    )
-                })}
+                        return(
+                            <Farm
+                            id={e.id}
+                            name="Fazenda"
+                            owner={e.proprietar}
+                            size={e.tamanho}
+                            local={e.endereco}
+                            />
+                        );
+                    })}
             </div>
         </div>
     );

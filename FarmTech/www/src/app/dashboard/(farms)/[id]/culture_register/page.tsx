@@ -11,8 +11,9 @@ export default function Page({ params }: { params: { id: number } }) {
     const router = useRouter()
 
     const [address, setAddress] = useState<string>('');
-    const [culture, setCulture] = useState<string>('');
+    const [qtd, setQtd] = useState<number>(0);
     const [message, setMessage] = useState('');
+    console.log(params.id);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -20,13 +21,13 @@ export default function Page({ params }: { params: { id: number } }) {
 
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:3000/farms', {
+            const response = await fetch('http://localhost:3000/farms/'+params.id, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
                 },
-                body: JSON.stringify({ proprietar, endereco, tamanho: Number(tamanho), clima }),
+                body: JSON.stringify({ qtd, local: address}),
             });
 
             if (!response.ok) {
@@ -46,14 +47,14 @@ export default function Page({ params }: { params: { id: number } }) {
                 <h1 className='text-4xl font-bold mb-[40px]'>Nova Cultura</h1>
                 <div className='flex flex-col w-[920px]'>
                     <TextInputFarm01
-                    text="Cultura:"
-                    value={culture}
-                    handler={(e : React.FormEvent<HTMLInputElement>) => setCulture(e.currentTarget.value)}
-                    />
-                    <TextInputFarm01
                     text="Endereço:                                                       .. "
                     value={address}
                     handler={(e : React.FormEvent<HTMLInputElement>) => setAddress(e.currentTarget.value)}
+                    />
+                    <NumberInputFarm01
+                    text="Quantidade:"
+                    value={qtd}
+                    handler={(e : React.FormEvent<HTMLInputElement>) => setQtd(e.currentTarget.valueAsNumber)}
                     />
                 </div>
                 <Button01 text="Adicionar" path="localhost:3000/farms" />

@@ -31,7 +31,7 @@ model Culture {
   local String
   qtd Int
   farmid Int
-  farm Farm @relation(fields: [farmid], references: [id] )
+  farm Farm @relation(fields: [farmid], references: [id], onDelete: Cascade )
   agriculture Agriculture?
 }
 

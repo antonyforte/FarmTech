@@ -18,8 +18,19 @@ export default function Farm(props : any) {
         router.push(path);
     }
 
-    function handleDelete() {
+    async function handleDelete() {
+        console.log(props.id);
+        const token = localStorage.getItem('token');
+        const response = await fetch('http://localhost:3000/farms/delete/'+props.id, {
+            method: 'DELETE',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
 
+        if (!response.ok) {
+            throw new Error(await response.text());
+        }
     }
 
     return (

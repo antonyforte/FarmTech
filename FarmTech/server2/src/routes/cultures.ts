@@ -5,7 +5,7 @@ import { z } from 'zod';
 export async function cultureRoutes(app: FastifyInstance) {
 
     // Rota GET das Culturas
-    app.get('/farms/:farmid', async (request, reply) => {
+    app.get('/farms/culture/:farmid', async (request, reply) => {
         const usercpf = request.user?.usercpf;
 
         if (!usercpf) {

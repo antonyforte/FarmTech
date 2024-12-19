@@ -24,7 +24,7 @@ export default function SideBar(props : any) {
     }
 
     return (
-        <div className="flex flex-col h-screen w-[322px] bg-orange-500 border-[2px] border-slate-900">
+        <div className="flex flex-col fixed top-0 h-screen w-[322px] bg-orange-500 border-[2px] border-slate-900">
             <div className="p-[14px]">
                 <Image className="h-[50px] w-[50px]" src={menuIcon} alt=""/>
             </div>
