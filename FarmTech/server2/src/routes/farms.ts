@@ -28,15 +28,12 @@ export async function farmRoutes(app : FastifyInstance) {
         })
     })
 
-    app.get("/unique/:id", async (request, reply) => {
-    
+    app.get('/:id',async (request, reply) => {
         const usercpf = request.user?.usercpf;
 
-        const paramsSchema = z.object({
-            id: z.coerce.number(),
-        });
-
-        const { id } = paramsSchema.parse(request.params); 
+        console.log("here");
+        const { id } = request.id;
+        console.log(id);
         console.log("here");
 
         if (!usercpf) {
@@ -44,13 +41,12 @@ export async function farmRoutes(app : FastifyInstance) {
         }
         
         try {
-            const updatedFarm = await prisma.farm.findUnique({
+            const farm = await prisma.farm.findUnique({
                 where: { id },
             });
-            console.log(updatedFarm);
-            return reply.status(200).send(updatedFarm);
+            return reply.status(200).send(farm);
         } catch (error) {
-            return reply.status(400).send({ message: "Erro ao atualizar Fazenda." });
+            return reply.status(400).send({ message: "Erro ao buscar Fazenda." });
         }
     })
 
@@ -135,7 +131,7 @@ export async function farmRoutes(app : FastifyInstance) {
             });
             return reply.status(200).send({ message: "Fazenda deletada com sucesso" });
         } catch (error) {
-            return reply.status(400).send({ message: "Erro ao deletar Fazenda   "+error });
+            return reply.status(400).send({ message: "Erro ao deletar Fazenda" });
         }
     });
 }

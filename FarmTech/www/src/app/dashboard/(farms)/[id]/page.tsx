@@ -33,7 +33,7 @@ export default function Page({ params }: { params: { id: number } }) {
                 if (!token) {
                     router.push("/signIn"); // Redireciona para login se não estiver autenticado
                 }
-                const response = await fetch("http://localhost:3000/farms/unique/7", {
+                const response = await fetch("http://localhost:3000/farms/"+params.id, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -56,7 +56,7 @@ export default function Page({ params }: { params: { id: number } }) {
                 if (!token) {
                     router.push("/signIn"); // Redireciona para login se não estiver autenticado
                 }
-                const response = await fetch('http://localhost:3000/farms/'+params.id, {
+                const response = await fetch('http://localhost:3000/cultures/'+params.id, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -73,8 +73,8 @@ export default function Page({ params }: { params: { id: number } }) {
             }
         };
 
-        fetchCultures();
         fetchFarm();
+        fetchCultures();
     }, []);
 
     if (error) {
