@@ -84,6 +84,7 @@ app.register(agricultureRoutes, {
     }
 
 })
+
 app.register(productRoutes, { 
     prefix: '/products', 
     // Rotas de fazenda terão autenticação via JWT

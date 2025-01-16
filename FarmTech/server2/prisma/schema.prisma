@@ -32,11 +32,8 @@ model Culture {
   qtd Int
   farmid Int
   farm Farm @relation(fields: [farmid], references: [id], onDelete: Cascade )
-<<<<<<< HEAD
-  agriculture Agriculture?
-=======
   agricultureid Int? @default(-1)
->>>>>>> d78c720ca548de73d8d5a8b4a4835278c3f98f3f
+  agriculture    Agriculture? @relation(fields: [agricultureid], references: [tipo], onDelete: SetNull)
 }
 
 model Agriculture {
@@ -44,25 +41,28 @@ model Agriculture {
   nome String
   valor_unid Float
   neces_clima String
-  
   need Need[]
+  culture Culture[] @relation()
 
 }
 
 model Need {
   id Int @id @unique @default(autoincrement())
+  agriculturetipo Int
+  productId Int
   qtd Int
 
-  agricultureid Int
-  agriculture Agriculture @relation(fields: [agricultureid], references: [tipo])
+  agriculture Agriculture @relation(fields: [agriculturetipo], references: [tipo], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
-  productid Int
 }
 
 model Product {
   id Int @id @unique @default(autoincrement())
   nome String
   preco Float
+
+  need Need[]
 
 
 }

@@ -1,86 +1,137 @@
 import type { FastifyInstance } from "fastify";
-import { prisma } from '../lib/prisma'
-import { z } from 'zod'
-import type { nodeModuleNameResolver } from "typescript";
+import { prisma } from "../lib/prisma";
+import { z } from "zod";
 
-export async function agricultureRoutes(app : FastifyInstance) {
+export async function agricultureRoutes(app: FastifyInstance) {
 
-    
-    app.get('/', async (request, reply) => {
+    // 🔎 GET: Lista todas as agriculturas com produtos relacionados e suas quantidades
+    app.get("/", async (request, reply) => {
         const usercpf = request.user?.usercpf;
-
-        if(!usercpf){
-            return reply.status(401).send({ message: 'Usuário não autenticado'});
-        }
-
-        const agricultures = await prisma.agriculture.findMany()
-
-
-        return agricultures.map((agriculture) => {
-            return{
-                tipo: agriculture.tipo,
-                nome: agriculture.nome,
-                valor_unid: agriculture.valor_unid,
-                neces_clima: agriculture.neces_clima,
-            }
-        })
-    })
-
-    app.get('/:tipo',async (request, reply) => {
-
-        const usercpf = request.user?.usercpf;
-
-        
-        const paramsSchema = z.object({
-            tipo: z.coerce.number(),
-        });
-
-        const { tipo } = paramsSchema.parse(request.params); 
 
         if (!usercpf) {
             return reply.status(401).send({ message: "Usuário não autenticado" });
         }
 
+        const agricultures = await prisma.agriculture.findMany({
+            include: {
+                need: {
+                    include: {
+                        product: true,
+                    }
+                }
+            }
+        });
+
+        return agricultures.map((agriculture) => {
+            return {
+                tipo: agriculture.tipo,
+                nome: agriculture.nome,
+                valor_unid: agriculture.valor_unid,
+                neces_clima: agriculture.neces_clima,
+                produtos: agriculture.need.map((need) => ({
+                    produto_nome: need.product.nome,
+                    produto_preco: need.product.preco,
+                    quantidade: need.qtd,
+                })),
+            };
+        });
+    });
+
+    // 🔎 GET: Retorna uma agricultura específica pelo tipo
+    app.get("/:tipo", async (request, reply) => {
+        const usercpf = request.user?.usercpf;
+
+        if (!usercpf) {
+            return reply.status(401).send({ message: "Usuário não autenticado" });
+        }
+
+        const paramsSchema = z.object({
+            tipo: z.coerce.number(),
+        });
+
+        const { tipo } = paramsSchema.parse(request.params);
+
         try {
             const agriculture = await prisma.agriculture.findUnique({
                 where: { tipo },
+                include: {
+                    need: {
+                        include: {
+                            product: true,
+                        }
+                    }
+                }
             });
-            return reply.status(200).send(agriculture);
+
+            if (!agriculture) {
+                return reply.status(404).send({ message: "Agricultura não encontrada" });
+            }
+
+            return {
+                tipo: agriculture.tipo,
+                nome: agriculture.nome,
+                valor_unid: agriculture.valor_unid,
+                neces_clima: agriculture.neces_clima,
+                produtos: agriculture.need.map((need) => ({
+                    produto_nome: need.product.nome,
+                    produto_preco: need.product.preco,
+                    quantidade: need.qtd,
+                })),
+            };
         } catch (error) {
             return reply.status(400).send({ message: "Erro ao buscar Agricultura." });
         }
-    })
+    });
 
-    app.post('/', async (request, reply) => {
-        
+    // ➕ POST: Cria uma nova agricultura
+    app.post("/", async (request, reply) => {
+        const usercpf = request.user?.usercpf;
+
+        if (!usercpf) {
+            return reply.status(401).send({ message: "Usuário não autenticado" });
+        }
 
         const bodySchema = z.object({
             nome: z.string(),
             valor_unid: z.number(),
             neces_clima: z.string(),
-        })
+            needsId: z.array(z.object({
+                productId: z.number(),
+                qtd: z.number(),
+            }))
+        });
 
-        const { nome, valor_unid, neces_clima } = bodySchema.parse(request.body)
+        const { nome, valor_unid, neces_clima, needsId } = bodySchema.parse(request.body);
+
+        try {
+            const agriculture = await prisma.agriculture.create({
+                data: {
+                    nome,
+                    valor_unid,
+                    neces_clima,
+                    need: {
+                        create: needsId.map(({ productId, qtd}) => ({
+                            productId,
+                            qtd,
+                        })),
+                    },
+                },
+            });
+
+            return reply.status(201).send(agriculture);
+        } catch (error) {
+            return reply.status(400).send({ message: "Erro ao criar Agricultura." });
+        }
+    });
+
+    // ✏️ PUT: Atualiza uma agricultura existente
+    app.put("/:tipo", async (request, reply) => {
         const usercpf = request.user?.usercpf;
 
         if (!usercpf) {
-            return reply.status(401).send({ message: 'Usuário não autenticado' });
-
+            return reply.status(401).send({ message: "Usuário não autenticado" });
         }
 
-        const agriculture = await prisma.agriculture.create({
-            data: {
-                nome,
-                valor_unid,
-                neces_clima,
-
-            },
-        });
-
-        return agriculture;
-    })
-
-    app.put("/edit/:tipo", async (request, reply) => {
         const paramsSchema = z.object({
             tipo: z.coerce.number(),
         });
@@ -89,47 +140,64 @@ export async function agricultureRoutes(app : FastifyInstance) {
             nome: z.string().optional(),
             valor_unid: z.number().optional(),
             neces_clima: z.string().optional(),
+            needsId: z.array(z.object({
+                productId: z.number(),
+                qtd: z.number(),
+            })).optional(),
         });
 
-        const { tipo } = paramsSchema.parse(request.params); // Valida o ID nos parâmetros
-        const { nome, valor_unid, neces_clima } = bodySchema.parse(request.body); // Valida o corpo da requisição
-        const usercpf = request.user?.usercpf;
-
-        if (!usercpf) {
-            return reply.status(401).send({ message: "Usuário não autenticado" });
-        }
+        const { tipo } = paramsSchema.parse(request.params);
+        const { nome, valor_unid, neces_clima, needsId } = bodySchema.parse(request.body);
 
         try {
-            const updatedAgriculture = await prisma.agriculture.update({
+            // Atualiza a agricultura com os dados fornecidos
+            const agriculture = await prisma.agriculture.update({
                 where: { tipo },
-                data: { nome, valor_unid, neces_clima },
+                data: {
+                    nome,
+                    valor_unid,
+                    neces_clima,
+                    // Se needsId for fornecido, atualiza o relacionamento
+                    need: needsId ? {
+                        // Primeiro, apaga os relacionamentos existentes
+                        deleteMany: {},
+                        // Agora, cria os novos relacionamentos
+                        create: needsId.map(({ productId, qtd }) => ({
+                            productId,
+                            qtd,
+                        })),
+                    } : undefined,
+                },
             });
-            return reply.status(200).send(updatedAgriculture);
+
+            return reply.status(200).send(agriculture);
         } catch (error) {
             return reply.status(400).send({ message: "Erro ao atualizar Agricultura." });
         }
     });
 
-    // Rota DELETE: Deleta uma agricultura pelo ID
-    app.delete("/delete/:tipo", async (request, reply) => {
-        const paramsSchema = z.object({
-            tipo: z.coerce.number(),
-        });
-
-        const { tipo } = paramsSchema.parse(request.params); // Valida o ID nos parâmetros
+    // ❌ DELETE: Remove uma agricultura existente
+    app.delete("/:tipo", async (request, reply) => {
         const usercpf = request.user?.usercpf;
 
         if (!usercpf) {
             return reply.status(401).send({ message: "Usuário não autenticado" });
         }
 
+        const paramsSchema = z.object({
+            tipo: z.coerce.number(),
+        });
+
+        const { tipo } = paramsSchema.parse(request.params);
+
         try {
             await prisma.agriculture.delete({
                 where: { tipo },
             });
-            return reply.status(200).send({ message: "Fazenda deletada com sucesso" });
+
+            return reply.status(204).send();
         } catch (error) {
-            return reply.status(400).send({ message: "Erro ao deletar Agricultura" });
+            return reply.status(400).send({ message: "Erro ao deletar Agricultura." });
         }
     });
 }

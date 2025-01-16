@@ -1,14 +1,14 @@
 ### Testando as rotas de Culture
 
 # GET - Lista todas as cultures de uma fazenda específica
-GET http://localhost:3000/farms/6/cultures
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiNDMyMyIsImlhdCI6MTczNDU0NjgzMiwiZXhwIjoxNzM0NTUwNDMyfQ.SReLCUX34VcTTmEZeYL4NuW7sn17uNKiA23YpVvFzC0
+GET http://localhost:3000/farms/1/cultures
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiMTIzIiwiaWF0IjoxNzM3MDQ5MTY5LCJleHAiOjE3MzcwNTI3Njl9._SQ2Kia8E-Z-VzEong9-R8504lzFXHmL41wuGWCNVWE
 
 ###
 
 # POST - Cria uma nova culture em uma fazenda
-POST http://localhost:3000/farms/6/cultures
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiNDMyMyIsImlhdCI6MTczNDU0NjgzMiwiZXhwIjoxNzM0NTUwNDMyfQ.SReLCUX34VcTTmEZeYL4NuW7sn17uNKiA23YpVvFzC0
+POST http://localhost:3000/farms/1/cultures
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiMTIzIiwiaWF0IjoxNzM3MDQ5MTY5LCJleHAiOjE3MzcwNTI3Njl9._SQ2Kia8E-Z-VzEong9-R8504lzFXHmL41wuGWCNVWE
 Content-Type: application/json
 
 {
@@ -20,20 +20,21 @@ Content-Type: application/json
 ###
 
 # PUT - Atualiza uma culture específica
-PUT http://localhost:3000/farms/6/cultures/1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiNDMyMyIsImlhdCI6MTczNDU0NjgzMiwiZXhwIjoxNzM0NTUwNDMyfQ.SReLCUX34VcTTmEZeYL4NuW7sn17uNKiA23YpVvFzC0
+PUT http://localhost:3000/farms/1/cultures/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiMTIzIiwiaWF0IjoxNzM3MDQ5MTY5LCJleHAiOjE3MzcwNTI3Njl9._SQ2Kia8E-Z-VzEong9-R8504lzFXHmL41wuGWCNVWE
 Content-Type: application/json
 
 {
   "local": "Campo Sul",
-  "qtd": 60
+  "qtd": 60,
+  "agricultureid": 2
 }
 
 ###
 
 # DELETE - Deleta uma culture específica
-DELETE http://localhost:3000/farms/6/cultures/3
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiNDMyMyIsImlhdCI6MTczNDU0NjgzMiwiZXhwIjoxNzM0NTUwNDMyfQ.SReLCUX34VcTTmEZeYL4NuW7sn17uNKiA23YpVvFzC0
+DELETE http://localhost:3000/farms/1/cultures/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiMTIzIiwiaWF0IjoxNzM3MDQ5MTY5LCJleHAiOjE3MzcwNTI3Njl9._SQ2Kia8E-Z-VzEong9-R8504lzFXHmL41wuGWCNVWE
 
 ###
 
@@ -41,40 +42,56 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiNDMyM
 
 # GET - Lista todas as agriculturas disponíveis
 GET http://localhost:3000/agricultures
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiNDMyMyIsImlhdCI6MTczNDU0NjgzMiwiZXhwIjoxNzM0NTUwNDMyfQ.SReLCUX34VcTTmEZeYL4NuW7sn17uNKiA23YpVvFzC0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiMTIzIiwiaWF0IjoxNzM3MDQ5MTY5LCJleHAiOjE3MzcwNTI3Njl9._SQ2Kia8E-Z-VzEong9-R8504lzFXHmL41wuGWCNVWE
 Content-Type: application/json
 
 ###
 
 # POST - Cria uma nova agricultura
 POST http://localhost:3000/agricultures
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiNDMyMyIsImlhdCI6MTczNDU0NjgzMiwiZXhwIjoxNzM0NTUwNDMyfQ.SReLCUX34VcTTmEZeYL4NuW7sn17uNKiA23YpVvFzC0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiMTIzIiwiaWF0IjoxNzM3MDQ5MTY5LCJleHAiOjE3MzcwNTI3Njl9._SQ2Kia8E-Z-VzEong9-R8504lzFXHmL41wuGWCNVWE
 Content-Type: application/json
 
 {
   "nome": "Milho",
   "valor_unid": 5,
-  "neces_clima": "Tropical" 
+  "neces_clima": "Tropical",
+  "needsId": [
+    {
+      "productId": 3,
+      "qtd": 100
+    },
+    {
+      "productId": 2,
+      "qtd": 50
+    }
+  ] 
 }
 
 ###
 
 # PUT - Atualiza uma agricultura específica
 PUT http://localhost:3000/agricultures/edit/1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiNDMyMyIsImlhdCI6MTczNDU0NjgzMiwiZXhwIjoxNzM0NTUwNDMyfQ.SReLCUX34VcTTmEZeYL4NuW7sn17uNKiA23YpVvFzC0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiMTIzIiwiaWF0IjoxNzM3MDQ5MTY5LCJleHAiOjE3MzcwNTI3Njl9._SQ2Kia8E-Z-VzEong9-R8504lzFXHmL41wuGWCNVWE
 Content-Type: application/json
 
 {
   "nome": "Soja",
   "valor_unid": 3,
-  "neces_clima": "Outono" 
+  "neces_clima": "Outono" ,
+  "needsId": [
+    {
+      "productId": 3,
+      "qtd": 50
+    },
+  ]
 }
 
 ###
 
 # DELETE - Deleta uma agricultura específica
-DELETE http://localhost:3000/agricultures/delete/3
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiNDMyMyIsImlhdCI6MTczNDU0NjgzMiwiZXhwIjoxNzM0NTUwNDMyfQ.SReLCUX34VcTTmEZeYL4NuW7sn17uNKiA23YpVvFzC0
+DELETE http://localhost:3000/agricultures/delete/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiMTIzIiwiaWF0IjoxNzM3MDQ5MTY5LCJleHAiOjE3MzcwNTI3Njl9._SQ2Kia8E-Z-VzEong9-R8504lzFXHmL41wuGWCNVWE
 
 
 ###
@@ -83,14 +100,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiNDMyM
 
 # GET - Lista todos os produtos
 GET http://localhost:3000/products
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiNDMyMyIsImlhdCI6MTczNDU0NjgzMiwiZXhwIjoxNzM0NTUwNDMyfQ.SReLCUX34VcTTmEZeYL4NuW7sn17uNKiA23YpVvFzC0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiMTIzIiwiaWF0IjoxNzM3MDQ5MTY5LCJleHAiOjE3MzcwNTI3Njl9._SQ2Kia8E-Z-VzEong9-R8504lzFXHmL41wuGWCNVWE
 Content-Type: application/json
 
 ###
 
 # POST - Cria um novo produto
 POST http://localhost:3000/products
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiNDMyMyIsImlhdCI6MTczNDU0NjgzMiwiZXhwIjoxNzM0NTUwNDMyfQ.SReLCUX34VcTTmEZeYL4NuW7sn17uNKiA23YpVvFzC0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiMTIzIiwiaWF0IjoxNzM3MDQ5MTY5LCJleHAiOjE3MzcwNTI3Njl9._SQ2Kia8E-Z-VzEong9-R8504lzFXHmL41wuGWCNVWE
 Content-Type: application/json
 
 {
@@ -102,7 +119,7 @@ Content-Type: application/json
 
 # PUT - Atualiza um produto específico
 PUT http://localhost:3000/products/edit/2
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiNDMyMyIsImlhdCI6MTczNDU0NjgzMiwiZXhwIjoxNzM0NTUwNDMyfQ.SReLCUX34VcTTmEZeYL4NuW7sn17uNKiA23YpVvFzC0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiMTIzIiwiaWF0IjoxNzM3MDQ5MTY5LCJleHAiOjE3MzcwNTI3Njl9._SQ2Kia8E-Z-VzEong9-R8504lzFXHmL41wuGWCNVWE
 Content-Type: application/json
 
 {
@@ -113,5 +130,5 @@ Content-Type: application/json
 ###
 
 # DELETE - Deleta um produto específico
-DELETE http://localhost:3000/products/delete/3
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiNDMyMyIsImlhdCI6MTczNDU0NjgzMiwiZXhwIjoxNzM0NTUwNDMyfQ.SReLCUX34VcTTmEZeYL4NuW7sn17uNKiA23YpVvFzC0
+DELETE http://localhost:3000/products/delete/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiMTIzIiwiaWF0IjoxNzM3MDQ5MTY5LCJleHAiOjE3MzcwNTI3Njl9._SQ2Kia8E-Z-VzEong9-R8504lzFXHmL41wuGWCNVWE
