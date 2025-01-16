@@ -1,2 +1,0 @@
-GET http://localhost:3000/farms/unique/7
-Authorization: BEARER eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiOTI0MyIsImlhdCI6MTczNDAwNTY1OSwiZXhwIjoxNzM0MDA5MjU5fQ.U-xGEItvgsCDzK0Qv0NM3Vfytpk1ugAstVd1tTyJ9k8

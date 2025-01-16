@@ -29,16 +29,17 @@ export async function farmRoutes(app : FastifyInstance) {
     })
 
     app.get('/:id',async (request, reply) => {
+
         const usercpf = request.user?.usercpf;
-
-        console.log("here");
-        const { id } = request.id;
-        console.log(id);
-        console.log("here");
-
         if (!usercpf) {
             return reply.status(401).send({ message: "Usuário não autenticado" });
         }
+
+        const paramsSchema = z.object({
+            id: z.coerce.number(),
+        });
+
+        const { id } = paramsSchema.parse(request.params);
         
         try {
             const farm = await prisma.farm.findUnique({
