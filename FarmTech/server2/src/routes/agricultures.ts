@@ -28,6 +28,7 @@ export async function agricultureRoutes(app: FastifyInstance) {
                 nome: agriculture.nome,
                 valor_unid: agriculture.valor_unid,
                 neces_clima: agriculture.neces_clima,
+                colhxanim: agriculture.colhxanim,
                 produtos: agriculture.need.map((need) => ({
                     produto_nome: need.product.nome,
                     produto_preco: need.product.preco,
@@ -72,6 +73,7 @@ export async function agricultureRoutes(app: FastifyInstance) {
                 nome: agriculture.nome,
                 valor_unid: agriculture.valor_unid,
                 neces_clima: agriculture.neces_clima,
+                colhxanim: agriculture.colhxanim,
                 produtos: agriculture.need.map((need) => ({
                     produto_nome: need.product.nome,
                     produto_preco: need.product.preco,
@@ -95,13 +97,14 @@ export async function agricultureRoutes(app: FastifyInstance) {
             nome: z.string(),
             valor_unid: z.number(),
             neces_clima: z.string(),
+            colhxanim: z.boolean(),
             needsId: z.array(z.object({
                 productId: z.number(),
                 qtd: z.number(),
             }))
         });
 
-        const { nome, valor_unid, neces_clima, needsId } = bodySchema.parse(request.body);
+        const { nome, valor_unid, neces_clima, colhxanim, needsId } = bodySchema.parse(request.body);
 
         try {
             const agriculture = await prisma.agriculture.create({
@@ -109,6 +112,7 @@ export async function agricultureRoutes(app: FastifyInstance) {
                     nome,
                     valor_unid,
                     neces_clima,
+                    colhxanim,
                     need: {
                         create: needsId.map(({ productId, qtd}) => ({
                             productId,
@@ -140,6 +144,7 @@ export async function agricultureRoutes(app: FastifyInstance) {
             nome: z.string().optional(),
             valor_unid: z.number().optional(),
             neces_clima: z.string().optional(),
+            colhxanim: z.boolean().optional(),
             needsId: z.array(z.object({
                 productId: z.number(),
                 qtd: z.number(),
