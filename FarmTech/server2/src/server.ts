@@ -110,6 +110,7 @@ app.register(productRoutes, {
 });
 
 app.register(cultureRoutes, {
+    prefix: '/cultures',
     preHandler: async (request: any, reply: any) => {
         const token = request.headers['authorization']?.split(' ')[1];
         if (!token) {

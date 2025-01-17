@@ -5,7 +5,7 @@ import { z } from 'zod';
 export async function cultureRoutes(app: FastifyInstance) {
 
     // Listar todas as culturas com o nome da agricultura
-    app.get('/farms/:farmid/cultures', async (request, reply) => {
+    app.get('/farms/:farmid', async (request, reply) => {
         const usercpf = request.user?.usercpf;
 
         if (!usercpf) {
