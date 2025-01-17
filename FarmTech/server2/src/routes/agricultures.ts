@@ -129,7 +129,7 @@ export async function agricultureRoutes(app: FastifyInstance) {
     });
 
     // ✏️ PUT: Atualiza uma agricultura existente
-    app.put("/:tipo", async (request, reply) => {
+    app.put("/edit/:tipo", async (request, reply) => {
         const usercpf = request.user?.usercpf;
 
         if (!usercpf) {
@@ -152,7 +152,7 @@ export async function agricultureRoutes(app: FastifyInstance) {
         });
 
         const { tipo } = paramsSchema.parse(request.params);
-        const { nome, valor_unid, neces_clima, needsId } = bodySchema.parse(request.body);
+        const { nome, valor_unid, neces_clima, colhxanim, needsId } = bodySchema.parse(request.body);
 
         try {
             // Atualiza a agricultura com os dados fornecidos
@@ -162,6 +162,7 @@ export async function agricultureRoutes(app: FastifyInstance) {
                     nome,
                     valor_unid,
                     neces_clima,
+                    colhxanim,
                     // Se needsId for fornecido, atualiza o relacionamento
                     need: needsId ? {
                         // Primeiro, apaga os relacionamentos existentes
@@ -182,7 +183,7 @@ export async function agricultureRoutes(app: FastifyInstance) {
     });
 
     // ❌ DELETE: Remove uma agricultura existente
-    app.delete("/:tipo", async (request, reply) => {
+    app.delete("/delete/:tipo", async (request, reply) => {
         const usercpf = request.user?.usercpf;
 
         if (!usercpf) {
