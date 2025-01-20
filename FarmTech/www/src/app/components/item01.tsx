@@ -4,7 +4,7 @@ import info from "@/public/image/Info.png"
 import edit from "@/public/image/Edit.png"
 import del from "@/public/image/Remove.png"
 
-export default function Item(props : any) {
+export default function Item01(props : any) {
     const router = useRouter();
 
 
@@ -18,8 +18,19 @@ export default function Item(props : any) {
         router.push(path);
     }
 
-    function handleDelete() {
+    async function handleDelete() {
+        const token = localStorage.getItem('token');
+        const response = await fetch('http://localhost:3000/cultures/farms/'+props.farmId+'/cultures/'+props.itemId, {
+            method: 'DELETE',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
 
+        if (!response.ok) {
+            throw new Error(await response.text());
+        }
+        props.handler();
     }
 
     return (

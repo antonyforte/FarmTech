@@ -28,23 +28,21 @@ export async function farmRoutes(app : FastifyInstance) {
         })
     })
 
-    app.get('/:id',async (request, reply) => {
-
-        const usercpf = request.user?.usercpf;
-        if (!usercpf) {
-            return reply.status(401).send({ message: "Usuário não autenticado" });
-        }
+    app.get("/:id" ,async (request, reply) => {
+        console.log("here");
+        
 
         const paramsSchema = z.object({
             id: z.coerce.number(),
         });
 
         const { id } = paramsSchema.parse(request.params);
-        
+        console.log(id);
         try {
             const farm = await prisma.farm.findUnique({
                 where: { id },
             });
+            console.log(farm);
             return reply.status(200).send(farm);
         } catch (error) {
             return reply.status(400).send({ message: "Erro ao buscar Fazenda." });

@@ -14,12 +14,24 @@ export default function Item02(props : any) {
     }
 
     function handleEdit() {
+        console.log(props.itemId);
         const path : string = "/dashboard/cultures/edit/"+ props.type+ "/" +props.itemId;
         router.push(path);
     }
 
-    function handleDelete() {
+    async function handleDelete() {
+        const token = localStorage.getItem('token');
+        const response = await fetch('http://localhost:3000/agricultures/delete/'+props.itemId, {
+            method: 'DELETE',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
 
+        if (!response.ok) {
+            throw new Error(await response.text());
+        }
+        props.handler();
     }
 
     return (

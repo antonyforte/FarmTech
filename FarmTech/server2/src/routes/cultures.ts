@@ -76,7 +76,7 @@ export async function cultureRoutes(app: FastifyInstance) {
     });
 
     // Criar cultura
-    app.post('/farms/:farmid/cultures', async (request, reply) => {
+    app.post('/farms/:farmid', async (request, reply) => {
         const usercpf = request.user?.usercpf;
 
         if (!usercpf) {
@@ -86,18 +86,18 @@ export async function cultureRoutes(app: FastifyInstance) {
         const paramsSchema = z.object({
             farmid: z.coerce.number(),
         });
-
+        
         const bodySchema = z.object({
             local: z.string(),
-            qtd: z.number().min(1),
+            qtd: z.number(),
             agricultureid: z.number().optional(),
         });
 
         const { farmid } = paramsSchema.parse(request.params);
         const { local, qtd, agricultureid } = bodySchema.parse(request.body);
 
-        const farm = await prisma.farm.findFirst({
-            where: { id: farmid, usercpf },
+        const farm = await prisma.farm.findUnique({
+            where: { id: farmid, usercpf},
         });
 
         if (!farm) {
@@ -131,7 +131,7 @@ export async function cultureRoutes(app: FastifyInstance) {
 
         const bodySchema = z.object({
             local: z.string().optional(),
-            qtd: z.number().min(1).optional(),
+            qtd: z.number().optional(),
             agricultureid: z.number().optional(),
         });
 
@@ -176,6 +176,7 @@ export async function cultureRoutes(app: FastifyInstance) {
         if (!farm) {
             return reply.status(404).send({ message: 'Fazenda não encontrada ou não pertence ao usuário.' });
         }
+        console.log(farmid);
 
         await prisma.culture.delete({
             where: { id },

@@ -41,6 +41,7 @@ model Agriculture {
   nome String
   valor_unid Float
   neces_clima String
+  colhxanim Boolean
   need Need[]
   culture Culture[] @relation()
 

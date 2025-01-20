@@ -1,22 +1,24 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, use } from 'react';
 import { useRouter } from 'next/navigation';
 import add from "@/public/image/add.png"
 import opt from "@/public/image/m0.png"
 import Button02 from '../../../components/button02';
 import SearchBar from '../../../components/searchBar';
-import Item from '../../../components/item';
+import Item01 from '../../../components/item01';
 
 interface List {
     type: string;
     title: string;
-    itens: [];
+    itens: any[];
 }
 
 export default function Page({ params }: { params: { id: number } }) {
 
     const router = useRouter();
+    const aux = use(params);
+    const [id, setId] = useState<number>(aux.id);
     const [search, setSearch] = useState<string>("");
     const [farm, setFarm] = useState<any>();
     const [list, setList] = useState<List>({
@@ -33,7 +35,7 @@ export default function Page({ params }: { params: { id: number } }) {
                 if (!token) {
                     router.push("/signIn"); // Redireciona para login se não estiver autenticado
                 }
-                const response = await fetch("http://localhost:3000/farms/"+params.id, {
+                const response = await fetch("http://localhost:3000/farms/"+id, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -56,7 +58,7 @@ export default function Page({ params }: { params: { id: number } }) {
                 if (!token) {
                     router.push("/signIn"); // Redireciona para login se não estiver autenticado
                 }
-                const response = await fetch('http://localhost:3000/cultures/'+params.id, {
+                const response = await fetch('http://localhost:3000/cultures/farms/'+id, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -84,7 +86,7 @@ export default function Page({ params }: { params: { id: number } }) {
     console.log(farm);
 
     function handleAddButton(type : string) {
-        router.push("/dashboard/"+ params.id+ "/" + type+"_register");
+        router.push("/dashboard/"+ id+ "/" + type+"_register");
     }
 
     function handleBack() {
@@ -92,13 +94,22 @@ export default function Page({ params }: { params: { id: number } }) {
     }
 
     function handleEdit() {
-        const path : string = '/dashboard/edit/' + params.id;
+        const path : string = '/dashboard/edit/' + id;
         router.push(path);
     }
 
 
     function handleOptButton() {
         return;
+    }
+
+    function handleDeleteButton(id : number) {
+        setList({
+            ...list,
+            itens: list.itens.filter(item =>
+              item.id !== id
+            )
+        });
     }
 
     function handleSearch(searched_farm : string) {
@@ -118,12 +129,12 @@ export default function Page({ params }: { params: { id: number } }) {
                 <h1 className='text-5xl w-[81vw] text-center'>Fazenda</h1>
                 <div className="flex flex-col pl-[30px] mt-[30px]">
                     <div className="flex flex-inline mb-[25px]">
-                        <h1>ID: {farm.id}</h1>
-                        <h1 className="ml-[40px] ml-[100px]">{farm.proprietar}</h1>
+                        <h1>ID: {id}</h1>
+                        <h1 className="ml-[40px] ml-[100px]">farm.proprietar</h1>
                     </div>
                     <div className="flex flex-inline mb-[25px]">
-                        <h1>{farm.tamanho} hectares</h1>
-                        <h1 className="ml-[40px] ml-[100px]">{farm.endereco}</h1>
+                        <h1>farm.tamanho hectares</h1>
+                        <h1 className="ml-[40px] ml-[100px]">farm.endereco</h1>
                     </div>
                 </div>
             </div>
@@ -153,10 +164,11 @@ export default function Page({ params }: { params: { id: number } }) {
                 <h1 className='w-[1200px] h-[65px] pt-[15px] text-center text-5xl text-white'>{list.title}</h1>
                 {list.itens.map(e => {
                     return(
-                        <Item
+                        <Item01
                         name={list.title}
                         itemId={e.id}
-                        farmId={params.id}
+                        farmId={id}
+                        handler={() => handleDeleteButton(e.id)}
                         type={list.type}
                         />
                     )

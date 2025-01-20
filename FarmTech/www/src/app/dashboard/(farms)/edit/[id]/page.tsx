@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, use } from 'react';
 import { useRouter } from 'next/navigation';
 import TextInputFarm01 from '@/app/components/textInputFarm01';
 import NumberInputFarm01 from '@/app/components/numberInputFarm01';
@@ -9,7 +9,8 @@ import Button01 from '@/app/components/button01';
 
 export default function Page({ params }: { params: { id: number } }) {
     const router = useRouter();
-
+    const aux = use(params);
+    const [id, setId] = useState<number>(aux.id);
     const [proprietar, setProprietar] = useState('');
     const [endereco, setEndereco] = useState('');
     const [tamanho, setTamanho] = useState<number | ''>('');
@@ -24,7 +25,7 @@ export default function Page({ params }: { params: { id: number } }) {
 
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:3000/farms/edit/'+params.id, {
+            const response = await fetch('http://localhost:3000/farms/edit/'+id, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

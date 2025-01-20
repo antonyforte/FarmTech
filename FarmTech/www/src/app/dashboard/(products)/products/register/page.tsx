@@ -20,21 +20,21 @@ export default function Page() {
 
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:3000/farms', {
+            const response = await fetch('http://localhost:3000/products', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
                 },
-                body: JSON.stringify({ proprietar, endereco, tamanho: Number(tamanho), clima }),
+                body: JSON.stringify({ nome: name, preco: Number(price)}),
             });
 
             if (!response.ok) {
                 throw new Error(await response.text());
             }
 
-            setMessage('Fazenda criada com sucesso!');
-            router.push("/dashboard")
+            setMessage('Produto Cadastrado!');
+            router.push("/dashboard/products")
         } catch (error: any) {
             setMessage(`Erro: ${error.message}`);
         }
@@ -42,16 +42,16 @@ export default function Page() {
 
     return (
         <form onSubmit={handleSubmit}>
-            <div className='flex flex-col h-[520px] w-[1000px] items-center text-3xl text-white bg-neutral-700 pt-[40px] pl-[80px] mt-[80px] ml-[120px]'>
+            <div className='flex flex-col h-[520px] w-[1000px] items-center text-3xl text-white bg-neutral-700 pt-[40px] pl-[80px] mt-[80px]'>
                 <h1 className='text-4xl font-bold mb-[40px]'>Novo Produto</h1>
                 <div className='flex flex-col w-[920px]'>
                     <TextInputFarm01
-                    text="Proprietário:"
+                    text="Nome:"
                     value={name}
                     handler={(e : React.FormEvent<HTMLInputElement>) => setName(e.currentTarget.value)}
                     />
                     <NumberInputFarm01
-                        text="Tamanho (hectares)"
+                        text="Preço"
                         value={price}
                         handler={(e : React.FormEvent<HTMLInputElement>) => setPrice(e.currentTarget.valueAsNumber)}
                     />

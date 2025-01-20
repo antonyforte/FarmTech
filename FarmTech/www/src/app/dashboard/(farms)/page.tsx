@@ -50,6 +50,14 @@ export default function Page() {
         return;
     }
 
+    function handleDeleteButton(id : number) {
+        setFarms(
+            farms.filter(item =>
+              item.id !== id
+            )
+        );
+    }
+
     function handleSearch(searched_farm : string) {
         setSearcheFarm(searched_farm);
     }
@@ -79,6 +87,7 @@ export default function Page() {
                             <Farm
                             id={e.id}
                             name="Fazenda"
+                            handler={() => handleDeleteButton(e.id)}
                             owner={e.proprietar}
                             size={e.tamanho}
                             local={e.endereco}

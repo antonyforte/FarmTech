@@ -43,7 +43,6 @@ app.register(farmRoutes, {
     // Rotas de fazenda terão autenticação via JWT
     preHandler: async (request: any, reply: any) => {
         const token = request.headers['authorization']?.split(' ')[1];
-
         if (!token) {
             return reply.status(401).send({ message: 'Token não fornecido' });
         }

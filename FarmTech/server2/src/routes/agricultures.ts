@@ -28,6 +28,7 @@ export async function agricultureRoutes(app: FastifyInstance) {
                 nome: agriculture.nome,
                 valor_unid: agriculture.valor_unid,
                 neces_clima: agriculture.neces_clima,
+                colhxanim: agriculture.colhxanim,
                 produtos: agriculture.need.map((need) => ({
                     produto_nome: need.product.nome,
                     produto_preco: need.product.preco,
@@ -72,6 +73,7 @@ export async function agricultureRoutes(app: FastifyInstance) {
                 nome: agriculture.nome,
                 valor_unid: agriculture.valor_unid,
                 neces_clima: agriculture.neces_clima,
+                colhxanim: agriculture.colhxanim,
                 produtos: agriculture.need.map((need) => ({
                     produto_nome: need.product.nome,
                     produto_preco: need.product.preco,
@@ -90,18 +92,21 @@ export async function agricultureRoutes(app: FastifyInstance) {
         if (!usercpf) {
             return reply.status(401).send({ message: "Usuário não autenticado" });
         }
+        console.log('here');
 
         const bodySchema = z.object({
             nome: z.string(),
             valor_unid: z.number(),
             neces_clima: z.string(),
+            colhxanim: z.boolean(),
             needsId: z.array(z.object({
                 productId: z.number(),
                 qtd: z.number(),
             }))
         });
 
-        const { nome, valor_unid, neces_clima, needsId } = bodySchema.parse(request.body);
+        const { nome, valor_unid, neces_clima, colhxanim, needsId } = bodySchema.parse(request.body);
+        console.log(colhxanim);
 
         try {
             const agriculture = await prisma.agriculture.create({
@@ -109,6 +114,7 @@ export async function agricultureRoutes(app: FastifyInstance) {
                     nome,
                     valor_unid,
                     neces_clima,
+                    colhxanim,
                     need: {
                         create: needsId.map(({ productId, qtd}) => ({
                             productId,
@@ -125,9 +131,9 @@ export async function agricultureRoutes(app: FastifyInstance) {
     });
 
     // ✏️ PUT: Atualiza uma agricultura existente
-    app.put("/:tipo", async (request, reply) => {
+    app.put("/edit/:tipo", async (request, reply) => {
         const usercpf = request.user?.usercpf;
-
+        console.log("here")
         if (!usercpf) {
             return reply.status(401).send({ message: "Usuário não autenticado" });
         }
@@ -140,6 +146,7 @@ export async function agricultureRoutes(app: FastifyInstance) {
             nome: z.string().optional(),
             valor_unid: z.number().optional(),
             neces_clima: z.string().optional(),
+            colhxanim: z.boolean().optional(),
             needsId: z.array(z.object({
                 productId: z.number(),
                 qtd: z.number(),
@@ -147,8 +154,8 @@ export async function agricultureRoutes(app: FastifyInstance) {
         });
 
         const { tipo } = paramsSchema.parse(request.params);
-        const { nome, valor_unid, neces_clima, needsId } = bodySchema.parse(request.body);
-
+        const { nome, valor_unid, neces_clima, colhxanim, needsId } = bodySchema.parse(request.body);
+        
         try {
             // Atualiza a agricultura com os dados fornecidos
             const agriculture = await prisma.agriculture.update({
@@ -157,6 +164,7 @@ export async function agricultureRoutes(app: FastifyInstance) {
                     nome,
                     valor_unid,
                     neces_clima,
+                    colhxanim,
                     // Se needsId for fornecido, atualiza o relacionamento
                     need: needsId ? {
                         // Primeiro, apaga os relacionamentos existentes
@@ -177,7 +185,7 @@ export async function agricultureRoutes(app: FastifyInstance) {
     });
 
     // ❌ DELETE: Remove uma agricultura existente
-    app.delete("/:tipo", async (request, reply) => {
+    app.delete("/delete/:tipo", async (request, reply) => {
         const usercpf = request.user?.usercpf;
 
         if (!usercpf) {

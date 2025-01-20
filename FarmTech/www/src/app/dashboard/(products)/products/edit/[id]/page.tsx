@@ -22,13 +22,13 @@ export default function Page({ params }: { params: { id: number } }) {
 
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:3000/farms/edit/'+params.id, {
+            const response = await fetch('http://localhost:3000/products/edit/'+params.id, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
                 },
-                body: JSON.stringify({ proprietar, endereco, tamanho: Number(tamanho), clima }),
+                body: JSON.stringify({ nome: name, preco: Number(price)}),
             });
 
             if (!response.ok) {
@@ -36,7 +36,7 @@ export default function Page({ params }: { params: { id: number } }) {
             }
 
             setMessage('Fazenda editada com sucesso!');
-            router.push("/dashboard")
+            router.push("/dashboard/products")
         } catch (error: any) {
             setMessage(`Erro: ${error.message}`);
         }
@@ -44,21 +44,21 @@ export default function Page({ params }: { params: { id: number } }) {
 
     return (
         <form onSubmit={handleSubmit}>
-            <div className='flex flex-col h-[520px] w-[1000px] items-center text-3xl text-white bg-neutral-700 pt-[40px] pl-[80px] mt-[80px] ml-[120px]'>
+            <div className='flex flex-col h-[520px] w-[1000px] items-center text-3xl text-white bg-neutral-700 pt-[40px] pl-[80px] mt-[80px]'>
                 <h1 className='text-4xl font-bold mb-[40px]'>Editar Produto</h1>
                 <div className='flex flex-col w-[920px]'>
                     <TextInputFarm01
-                    text="Proprietário:"
+                    text="Nome:"
                     value={name}
                     handler={(e : React.FormEvent<HTMLInputElement>) => setName(e.currentTarget.value)}
                     />
                     <NumberInputFarm01
-                        text="Tamanho (hectares)"
+                        text="Preço"
                         value={price}
                         handler={(e : React.FormEvent<HTMLInputElement>) => setPrice(e.currentTarget.valueAsNumber)}
                     />
                 </div>
-                <Button01 text="Adicionar" path="localhost:3000/farms" />
+                <Button01 text="Adicionar" path="localhost:3000/farm" />
                 {message && <p>{message}</p>}
             </div>
         </form>

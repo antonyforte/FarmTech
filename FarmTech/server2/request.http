@@ -2,13 +2,13 @@
 
 # GET - Lista todas as cultures de uma fazenda específica
 GET http://localhost:3000/farms/1/cultures
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiMTIzIiwiaWF0IjoxNzM3MDQ5MTY5LCJleHAiOjE3MzcwNTI3Njl9._SQ2Kia8E-Z-VzEong9-R8504lzFXHmL41wuGWCNVWE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiNDM0MyIsImlhdCI6MTczNzE0NTYzMSwiZXhwIjoxNzM3MTQ5MjMxfQ.c_kaQU2kilVrMl1kWG23D8ESgj-olGBdNxNKd4Vqe6k
 
 ###
 
 # POST - Cria uma nova culture em uma fazenda
 POST http://localhost:3000/farms/1/cultures
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiMTIzIiwiaWF0IjoxNzM3MDQ5MTY5LCJleHAiOjE3MzcwNTI3Njl9._SQ2Kia8E-Z-VzEong9-R8504lzFXHmL41wuGWCNVWE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiNDM0MyIsImlhdCI6MTczNzE0NTYzMSwiZXhwIjoxNzM3MTQ5MjMxfQ.c_kaQU2kilVrMl1kWG23D8ESgj-olGBdNxNKd4Vqe6k
 Content-Type: application/json
 
 {
@@ -21,7 +21,7 @@ Content-Type: application/json
 
 # PUT - Atualiza uma culture específica
 PUT http://localhost:3000/farms/1/cultures/1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiMTIzIiwiaWF0IjoxNzM3MDQ5MTY5LCJleHAiOjE3MzcwNTI3Njl9._SQ2Kia8E-Z-VzEong9-R8504lzFXHmL41wuGWCNVWE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiNDM0MyIsImlhdCI6MTczNzE0NTYzMSwiZXhwIjoxNzM3MTQ5MjMxfQ.c_kaQU2kilVrMl1kWG23D8ESgj-olGBdNxNKd4Vqe6k
 Content-Type: application/json
 
 {
@@ -34,7 +34,7 @@ Content-Type: application/json
 
 # DELETE - Deleta uma culture específica
 DELETE http://localhost:3000/farms/1/cultures/2
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiMTIzIiwiaWF0IjoxNzM3MDQ5MTY5LCJleHAiOjE3MzcwNTI3Njl9._SQ2Kia8E-Z-VzEong9-R8504lzFXHmL41wuGWCNVWE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiNDM0MyIsImlhdCI6MTczNzE0NTYzMSwiZXhwIjoxNzM3MTQ5MjMxfQ.c_kaQU2kilVrMl1kWG23D8ESgj-olGBdNxNKd4Vqe6k
 
 ###
 
@@ -42,20 +42,21 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiMTIzI
 
 # GET - Lista todas as agriculturas disponíveis
 GET http://localhost:3000/agricultures
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiMTIzIiwiaWF0IjoxNzM3MDQ5MTY5LCJleHAiOjE3MzcwNTI3Njl9._SQ2Kia8E-Z-VzEong9-R8504lzFXHmL41wuGWCNVWE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiNDM0MyIsImlhdCI6MTczNzE0NTYzMSwiZXhwIjoxNzM3MTQ5MjMxfQ.c_kaQU2kilVrMl1kWG23D8ESgj-olGBdNxNKd4Vqe6k
 Content-Type: application/json
 
 ###
 
 # POST - Cria uma nova agricultura
 POST http://localhost:3000/agricultures
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiMTIzIiwiaWF0IjoxNzM3MDQ5MTY5LCJleHAiOjE3MzcwNTI3Njl9._SQ2Kia8E-Z-VzEong9-R8504lzFXHmL41wuGWCNVWE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiNDM0MyIsImlhdCI6MTczNzE0NTYzMSwiZXhwIjoxNzM3MTQ5MjMxfQ.c_kaQU2kilVrMl1kWG23D8ESgj-olGBdNxNKd4Vqe6k
 Content-Type: application/json
 
 {
   "nome": "Milho",
   "valor_unid": 5,
   "neces_clima": "Tropical",
+  "colhxanim": true,
   "needsId": [
     {
       "productId": 3,
@@ -72,18 +73,19 @@ Content-Type: application/json
 
 # PUT - Atualiza uma agricultura específica
 PUT http://localhost:3000/agricultures/edit/1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiMTIzIiwiaWF0IjoxNzM3MDQ5MTY5LCJleHAiOjE3MzcwNTI3Njl9._SQ2Kia8E-Z-VzEong9-R8504lzFXHmL41wuGWCNVWE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiNDM0MyIsImlhdCI6MTczNzE0NTYzMSwiZXhwIjoxNzM3MTQ5MjMxfQ.c_kaQU2kilVrMl1kWG23D8ESgj-olGBdNxNKd4Vqe6k
 Content-Type: application/json
 
 {
   "nome": "Soja",
   "valor_unid": 3,
   "neces_clima": "Outono" ,
+  "colhxanim": true ,
   "needsId": [
     {
       "productId": 3,
       "qtd": 50
-    },
+    }
   ]
 }
 
@@ -91,7 +93,7 @@ Content-Type: application/json
 
 # DELETE - Deleta uma agricultura específica
 DELETE http://localhost:3000/agricultures/delete/1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiMTIzIiwiaWF0IjoxNzM3MDQ5MTY5LCJleHAiOjE3MzcwNTI3Njl9._SQ2Kia8E-Z-VzEong9-R8504lzFXHmL41wuGWCNVWE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiNDM0MyIsImlhdCI6MTczNzE0NTYzMSwiZXhwIjoxNzM3MTQ5MjMxfQ.c_kaQU2kilVrMl1kWG23D8ESgj-olGBdNxNKd4Vqe6k
 
 
 ###
@@ -100,14 +102,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiMTIzI
 
 # GET - Lista todos os produtos
 GET http://localhost:3000/products
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiMTIzIiwiaWF0IjoxNzM3MDQ5MTY5LCJleHAiOjE3MzcwNTI3Njl9._SQ2Kia8E-Z-VzEong9-R8504lzFXHmL41wuGWCNVWE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiNDM0MyIsImlhdCI6MTczNzE0NTYzMSwiZXhwIjoxNzM3MTQ5MjMxfQ.c_kaQU2kilVrMl1kWG23D8ESgj-olGBdNxNKd4Vqe6k
 Content-Type: application/json
 
 ###
 
 # POST - Cria um novo produto
 POST http://localhost:3000/products
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiMTIzIiwiaWF0IjoxNzM3MDQ5MTY5LCJleHAiOjE3MzcwNTI3Njl9._SQ2Kia8E-Z-VzEong9-R8504lzFXHmL41wuGWCNVWE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiNDM0MyIsImlhdCI6MTczNzE0NTYzMSwiZXhwIjoxNzM3MTQ5MjMxfQ.c_kaQU2kilVrMl1kWG23D8ESgj-olGBdNxNKd4Vqe6k
 Content-Type: application/json
 
 {
@@ -119,7 +121,7 @@ Content-Type: application/json
 
 # PUT - Atualiza um produto específico
 PUT http://localhost:3000/products/edit/2
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiMTIzIiwiaWF0IjoxNzM3MDQ5MTY5LCJleHAiOjE3MzcwNTI3Njl9._SQ2Kia8E-Z-VzEong9-R8504lzFXHmL41wuGWCNVWE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiNDM0MyIsImlhdCI6MTczNzE0NTYzMSwiZXhwIjoxNzM3MTQ5MjMxfQ.c_kaQU2kilVrMl1kWG23D8ESgj-olGBdNxNKd4Vqe6k
 Content-Type: application/json
 
 {
@@ -131,4 +133,4 @@ Content-Type: application/json
 
 # DELETE - Deleta um produto específico
 DELETE http://localhost:3000/products/delete/1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiMTIzIiwiaWF0IjoxNzM3MDQ5MTY5LCJleHAiOjE3MzcwNTI3Njl9._SQ2Kia8E-Z-VzEong9-R8504lzFXHmL41wuGWCNVWE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiNDM0MyIsImlhdCI6MTczNzE0NTYzMSwiZXhwIjoxNzM3MTQ5MjMxfQ.c_kaQU2kilVrMl1kWG23D8ESgj-olGBdNxNKd4Vqe6k

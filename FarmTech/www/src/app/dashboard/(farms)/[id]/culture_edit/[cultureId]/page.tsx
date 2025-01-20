@@ -1,19 +1,51 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import TextInputFarm01 from '@/app/components/textInputFarm01';
 import NumberInputFarm01 from '@/app/components/numberInputFarm01';
 import SelectInput from '@/app/components/selectInputFarm';
 import Button01 from '@/app/components/button01';
 
-export default function Page({ params }: { params: { id: number, cultureId: number } }) {
+export default function Page({ params }: { params: { id: number, cultureId : number } }) {
     const router = useRouter()
 
     const [address, setAddress] = useState<string>('');
     const [qtd, setQtd] = useState<number>(0);
+    const [agriculturesIds, setAgriculturesIds] = useState<number[]>([]);
+    const [agricultureId, setAgricultureId] = useState<number>();
     const [message, setMessage] = useState('');
-    console.log(params.id);
+    const [error, setError] = useState('');
+
+    useEffect(() => {
+        const fetchAgricultures = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    router.push("/signIn"); // Redireciona para login se não estiver autenticado
+                }
+                const response = await fetch("http://localhost:3000/agricultures", {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error(await response.text());
+                }
+
+                const data = await response.json();
+                setAgriculturesIds(data.map(e => {
+                    return(e.tipo)
+                }))
+                setAgricultureId(Number(data[0].tipo));
+            } catch (error: any) {
+                setError(error.message);
+            }
+        };
+
+        fetchAgricultures();
+    }, []);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -21,13 +53,13 @@ export default function Page({ params }: { params: { id: number, cultureId: numb
 
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:3000/farms/'+params.id+"/edit/"+params.cultureId, {
+            const response = await fetch('http://localhost:3000/cultures/farms/'+params.id+"/cultures/"+params.cultureId, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
                 },
-                body: JSON.stringify({ qtd, local: address}),
+                body: JSON.stringify({ local: address, qtd: qtd, agricultureid: agricultureId}),
             });
 
             if (!response.ok) {
@@ -51,8 +83,14 @@ export default function Page({ params }: { params: { id: number, cultureId: numb
                     value={address}
                     handler={(e : React.FormEvent<HTMLInputElement>) => setAddress(e.currentTarget.value)}
                     />
+                    <SelectInput
+                    text= "Cultura"
+                    value={agricultureId}
+                    options={agriculturesIds}
+                    handler={(e : React.FormEvent<HTMLInputElement>) => setAgricultureId(Number(e.currentTarget.value))}
+                    />
                     <NumberInputFarm01
-                    text="Quantidade:"
+                    text="Quantidade"
                     value={qtd}
                     handler={(e : React.FormEvent<HTMLInputElement>) => setQtd(e.currentTarget.valueAsNumber)}
                     />
