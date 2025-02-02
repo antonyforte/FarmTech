@@ -208,6 +208,7 @@ export default function Page() {
                         <div className='flex justify-center mt-[-25px] mb-[30px]'>
                             <Button02   
                                 img = {add}
+                                type= "button"
                                 handler = {() => {handleAddButton(count)}}
                             />
                         </div>

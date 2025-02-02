@@ -37,9 +37,6 @@ export default function Item02(props : any) {
     return (
         <div className="flex flex-col h-[220px] pt-[20px] w-[200px] ml-[10px] mb-[20px] items-center">
             <div className="flex flex-col justify-center items-end pr-[5px] w-[175px] h-[180px] border-[1px] border-neutral-400 bg-slate-900 ml-[30px] mr-[40px]">
-                <button onClick={handleInfo}>
-                    <Image className="mb-[12px] h-[40px] w-[40px]" src={info} alt=""/>
-                </button>
                 <button onClick={handleEdit}>
                     <Image className="mb-[12px] h-[40px] w-[40px]" src={edit} alt=""/>
                 </button>
@@ -48,7 +45,7 @@ export default function Item02(props : any) {
                 </button>
             </div>
             <div className="text-white text-1xl mt-[10px]">
-                <h1>{props.name}</h1>
+                <h1>{props.name} ID: {props.itemId}</h1>
             </div>
         </div>
     );

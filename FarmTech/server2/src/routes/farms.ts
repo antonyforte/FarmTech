@@ -29,8 +29,10 @@ export async function farmRoutes(app : FastifyInstance) {
     })
 
     app.get("/:id" ,async (request, reply) => {
-        console.log("here");
-        
+        const usercpf = request.user?.usercpf;
+        if (!usercpf) {
+            return reply.status(401).send({ message: "Usuário não autenticado" });
+        }
 
         const paramsSchema = z.object({
             id: z.coerce.number(),
