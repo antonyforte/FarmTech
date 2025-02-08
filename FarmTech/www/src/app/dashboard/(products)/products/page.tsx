@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Button02 from "@/app/components/button02";
 import Product from "../../../components/product";
-import add from "@/public/image/Add.png"
+import add from "@/public/image/add.png"
 
 
 export default function Page() {
