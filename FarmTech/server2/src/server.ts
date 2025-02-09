@@ -5,6 +5,7 @@ import { productRoutes } from './routes/products';
 import { userRoutes } from './routes/users';
 import { cultureRoutes } from './routes/cultures';
 import { agricultureRoutes } from './routes/agricultures';
+import { needRoutes } from './routes/needs';
 import { usersAccountsRoutes } from './routes/usersAccount';
 import jwt from 'jsonwebtoken';
 import type { CustomJwtPayload } from './lib/customJwtPayload'; // Importando o tipo, se necessário
@@ -131,6 +132,29 @@ app.register(cultureRoutes, {
     }
 });
 
+app.register(needRoutes, {
+        preHandler: async (request: any, reply: any) => {
+            const token = request.headers['authorization']?.split(' ')[1];
+    
+            if (!token) {
+                console.log("essa merda de token não ta autorizando");
+                return reply.status(401).send({ message: 'Token não fornecido'});
+            }
+    
+            try {
+                const decoded = jwt.verify(token, 'crop-king');
+                if (typeof decoded === 'object' && decoded !== null) {
+                    request.user = decoded as CustomJwtPayload;
+                } else {
+                    return reply.status(401).send({ message: 'Token inválido' });
+                }
+            } catch (err) {
+                return reply.status(401).send({ message: 'Token inválido' });
+            }
+    
+        }
+    }
+);
 
 // Hook de autenticação global
 app.addHook('onRequest', async (request, reply) => {

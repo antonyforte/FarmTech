@@ -1,6 +1,6 @@
 'use client';
 
-import add from "@/public/image/Add.png"
+import add from "@/public/image/add.png"
 import opt from "@/public/image/m0.png"
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";

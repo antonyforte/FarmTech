@@ -1,8 +1,8 @@
 ### Testando as rotas de Culture
 
 # GET - Lista todas as cultures de uma fazenda específica
-GET http://localhost:3000/farms/1/cultures
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoiNDM0MyIsImlhdCI6MTczNzE0NTYzMSwiZXhwIjoxNzM3MTQ5MjMxfQ.c_kaQU2kilVrMl1kWG23D8ESgj-olGBdNxNKd4Vqe6k
+GET http://localhost:3000/cultures/farms/3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyY3BmIjoidGVzdGUiLCJpYXQiOjE3Mzg5NzkyMjksImV4cCI6MTczODk4MjgyOX0.vv21WtRIn42dTzfJeXniEGyXMS9tzLP6jnawwbEin1Q
 
 ###
 
