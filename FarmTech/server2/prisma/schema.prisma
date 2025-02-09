@@ -60,7 +60,7 @@ model Need {
 
 model Product {
   id Int @id @unique @default(autoincrement())
-  nome String
+  nome String @unique
   preco Float
 
   need Need[]

@@ -13,7 +13,7 @@ import del from "@/public/image/Remove.png"
 
 
 interface product {
-    productId: number |'',
+    productName: string |'',
     qtd: number | ''
 }
 interface item {
@@ -27,10 +27,10 @@ export default function Page() {
     const [name, setName] = useState('');
     const [price, setPrice] = useState<number | ''>('');
     const [clima, setClima] = useState('');
-    const [productsIds, setProductsIds] = useState<number[]>([]);
+    const [productsNames, setProductsNames] = useState<string[]>([]);
     const [itens, setItens] = useState<item[]>([{
         id: 0,
-        product: {productId: '',
+        product: {productName: '',
                 qtd: 0
         },
     }]);
@@ -57,10 +57,10 @@ export default function Page() {
                     }
     
                     const data = await response.json();
-                    setProductsIds(data.map(e => {
-                        return(e.id)
+                    setProductsNames(data.map(e => {
+                        return(e.nome)
                     }))
-                    handleProductChange(data[0].id, 0);
+                    handleProductChange(data[0].nome, 0);
                 } catch (error: any) {
                     setError(error.message);
                 }
@@ -88,9 +88,9 @@ export default function Page() {
                 colhxanim: true,
                 needsId:
                     itens.map(item => {{
-                        console.log(item.product.productId);
+                        console.log(item.product.productName);
                         return({
-                            productId: Number(item.product.productId),
+                            producName: String(item.product.productName),
                             qtd: Number(item.product.qtd)
                         })
                     }})
@@ -111,7 +111,7 @@ export default function Page() {
     function handleAddButton(idOp : number) {
         setItens([...itens, {
             id: idOp,
-            product: {productId: productsIds[0],
+            product: {productName: productsNames[0],
                     qtd: 0
             },
         }]);
@@ -133,7 +133,7 @@ export default function Page() {
                 ...c,
                 product: {
                     ...c.product,
-                    productId: Number(id),
+                    productName: String(id),
                 }
               });
             } else {
@@ -188,8 +188,8 @@ export default function Page() {
                                 <div className='flex flex-inline justify-center'>
                                     <SelectInput
                                         text= "Produto"
-                                        value={item.product.productId}
-                                        options={productsIds}
+                                        value={item.product.productName}
+                                        options={productsNames}
                                         handler={(e : React.FormEvent<HTMLInputElement>) => handleProductChange(e.currentTarget.value, item.id)}
                                     />
                                     <div className='ml-[100px] mr-[30px]'>

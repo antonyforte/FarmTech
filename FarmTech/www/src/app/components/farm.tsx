@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import info from "@/public/image/Info.png"
 import edit from "@/public/image/Edit.png"
 import del from "@/public/image/Remove.png"
+import img from "@/public/image/Fazenda.jpg"
 
 export default function Farm(props : any) {
     const router = useRouter();
@@ -19,7 +20,6 @@ export default function Farm(props : any) {
     }
 
     async function handleDelete() {
-        console.log(props.id);
         const token = localStorage.getItem('token');
         const response = await fetch('http://localhost:3000/farms/delete/'+props.id, {
             method: 'DELETE',
@@ -31,21 +31,24 @@ export default function Farm(props : any) {
         if (!response.ok) {
             throw new Error(await response.text());
         }
+        props.handler();
     }
 
     return (
         <div className="flex flex-inline h-[200px] w-[1000px] bg-neutral-700 mb-[80px] items-center">
-            <div className="w-[250px] h-[150px] bg-slate-900 ml-[30px] mr-[40px]"></div>
+            <div className="w-[250px] h-[150px] border-[1px] border-neutral-400 bg-slate-900 ml-[30px] mr-[40px]">
+                <Image className="w-[250px] h-[150px]" src={img} alt=""/>
+            </div>
             <div className="flex flex-col h-[160px] w-[500px] text-white pt-[5px]">
                 <div>
                     <h1 className="text-4xl font-bold">{props.name}</h1>
                 </div>
                 <div className="flex flex-col mt-[30px]">
                     <div className="flex flex-inline mb-[25px]">
-                        <h1>{props.owner}</h1>
-                        <h1 className="ml-[40px] ml-[100px]">{props.size} hectares</h1>
+                        <h1>Proprietário:   {props.owner}</h1>
+                        <h1 className="ml-[40px] ml-[100px]">Tamanho:   {props.size} hectares</h1>
                     </div>
-                    <h1>{props.local}</h1>
+                    <h1>Local:  {props.local}</h1>
                 </div>
             </div>
             <div className="flex flex-col ml-[60px]">
