@@ -10,8 +10,9 @@ import Farm from "@/app/components/farm";
 
 export default function Page() {
     const router = useRouter();
-    const [searchedFarm, setSearcheFarm] = useState<string>("");
     const [farms, setFarms] = useState([]);
+    const [list, setList] = useState([]);
+    const [search, setSearch] = useState<string>('');
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
@@ -33,6 +34,7 @@ export default function Page() {
 
                 const data = await response.json();
                 setFarms(data);
+                setList(data);
             } catch (error: any) {
                 setError(error.message);
             }
@@ -46,10 +48,6 @@ export default function Page() {
         router.push("/dashboard/register");
     }
 
-    function handleOptButton() {
-        return;
-    }
-
     function handleDeleteButton(id : number) {
         setFarms(
             farms.filter(item =>
@@ -58,8 +56,14 @@ export default function Page() {
         );
     }
 
-    function handleSearch(searched_farm : string) {
-        setSearcheFarm(searched_farm);
+    function handleSearch(e : string) {
+        setSearch(e);
+        setList(farms.filter(farm => (farm.proprietar.toLowerCase().includes(e.toLowerCase()) || farm.endereco.toLowerCase().includes(e.toLowerCase()))));
+    }
+
+    function handleAgroList() {
+        const path : string = '/dashboard/ranking';
+        router.push(path);
     }
 
 
@@ -70,19 +74,16 @@ export default function Page() {
                 img = {add}
                 handler = {() => {handleAddButton()}}
                 />
-                <Button02
-                img = {opt}
-                handler = {() => {handleOptButton()}}
-                />
                 <SearchBar
-                value={searchedFarm} 
-                handler={(e : React.FormEvent<HTMLInputElement>) => {handleSearch(e.currentTarget.value)}}  
+                value={search} 
+                handler01={(e : React.FormEvent<HTMLInputElement>) => {handleSearch(String(e.currentTarget.value))}}  
                 type="text" 
                 placeholder="Digite o nome da fazenda..."
                 />
+                <button onClick={() => handleAgroList()} className='h-[50px] ml-[20px] pl-[20px] pr-[20px] bg-yellow-400 border-[1px] border-slate-700 rounded-md text-[15px]'>Listagem de Agropecuária</button>
             </div>
             <div className="flex flex-col mt-[50px]">
-                {farms.map(e => {
+                {list.map(e => {
                         return(
                             <Farm
                             id={e.id}

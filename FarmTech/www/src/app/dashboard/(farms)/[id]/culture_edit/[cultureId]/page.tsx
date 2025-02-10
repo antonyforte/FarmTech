@@ -7,13 +7,18 @@ import NumberInputFarm01 from '@/app/components/numberInputFarm01';
 import SelectInput from '@/app/components/selectInputFarm';
 import Button01 from '@/app/components/button01';
 
+interface agriculture {
+    id: number | '',
+    name: string,
+}
+
 export default function Page({ params }: { params: { id: number, cultureId : number } }) {
     const router = useRouter()
 
     const [address, setAddress] = useState<string>('');
     const [qtd, setQtd] = useState<number>(0);
-    const [agriculturesIds, setAgriculturesIds] = useState<number[]>([]);
-    const [agricultureId, setAgricultureId] = useState<number>();
+    const [agricultures, setAgricultures] = useState<agriculture[]>([]);
+    const [agriculture, setAgriculture] = useState<agriculture>({id: '', name: ''});
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
 
@@ -35,10 +40,16 @@ export default function Page({ params }: { params: { id: number, cultureId : num
                 }
 
                 const data = await response.json();
-                setAgriculturesIds(data.map(e => {
-                    return(e.tipo)
+                setAgricultures(data.map(e => {
+                    return({
+                        id: e.tipo,
+                        name: e.nome
+                    })
                 }))
-                setAgricultureId(Number(data[0].tipo));
+                setAgriculture({
+                    id: Number(data[0].tipo),
+                    name: String(data[0].nome)
+                });
             } catch (error: any) {
                 setError(error.message);
             }
@@ -59,7 +70,7 @@ export default function Page({ params }: { params: { id: number, cultureId : num
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
                 },
-                body: JSON.stringify({ local: address, qtd: qtd, agricultureid: agricultureId}),
+                body: JSON.stringify({ local: address, qtd: qtd, agricultureid: Number(agriculture.id)}),
             });
 
             if (!response.ok) {
@@ -73,10 +84,15 @@ export default function Page({ params }: { params: { id: number, cultureId : num
         }
     };
 
+    function handleChangeCulture(name : string) {
+        const aux = agricultures.filter(e => e.name == name);
+        setAgriculture(aux[0]);
+    }
+
     return (
         <form onSubmit={handleSubmit}>
             <div className='flex flex-col h-[520px] w-[1000px] items-center text-3xl text-white bg-neutral-700 pt-[40px] pl-[80px] mt-[80px] ml-[120px]'>
-                <h1 className='text-4xl font-bold mb-[40px]'>Nova Cultura</h1>
+                <h1 className='text-4xl font-bold mb-[40px]'>Editar Cultura</h1>
                 <div className='flex flex-col w-[920px]'>
                     <TextInputFarm01
                     text="Endereço:                                                       .. "
@@ -85,9 +101,9 @@ export default function Page({ params }: { params: { id: number, cultureId : num
                     />
                     <SelectInput
                     text= "Cultura"
-                    value={agricultureId}
-                    options={agriculturesIds}
-                    handler={(e : React.FormEvent<HTMLInputElement>) => setAgricultureId(Number(e.currentTarget.value))}
+                    value={agriculture.name}
+                    options={agricultures.map(i => {return(i.name)})}
+                    handler={(e : React.FormEvent<HTMLInputElement>) => handleChangeCulture(String(e.currentTarget.value))}
                     />
                     <NumberInputFarm01
                     text="Quantidade"
