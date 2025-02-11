@@ -187,7 +187,7 @@ export default function Page({ params }: { params: { id: number } }) {
     return (
         <form onSubmit={handleSubmit}>
             <div className='flex flex-col min-h-[520px] w-[1000px] items-center text-3xl text-white bg-neutral-700 pt-[40px] pl-[80px] pb-[30px] mt-[80px]'>
-                <h1 className='text-4xl font-bold mb-[40px]'>Novo Animal</h1>
+                <h1 className='text-4xl font-bold mb-[40px]'>Editar Animal</h1>
                 <div className='flex flex-col w-[920px]'>
                     <TextInputFarm01
                     text="Animal:"
