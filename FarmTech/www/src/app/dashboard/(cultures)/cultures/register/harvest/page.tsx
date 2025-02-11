@@ -13,12 +13,16 @@ import del from "@/public/image/Remove.png"
 
 
 interface product {
-    productId: number |'',
+    productName: string |'',
+    productId: number | '',
+}
+interface info {
+    product: product,
     qtd: number | ''
 }
 interface item {
     id: number,
-    product: product
+    info: info
 }
 
 export default function Page() {
@@ -27,10 +31,15 @@ export default function Page() {
     const [name, setName] = useState('');
     const [price, setPrice] = useState<number | ''>('');
     const [clima, setClima] = useState('');
-    const [productsIds, setProductsIds] = useState<number[]>([]);
+    const [products, setProducts] = useState<product[]>([]);
+    const [productsNames, setProductsNames] = useState<string[] |''>([]);
     const [itens, setItens] = useState<item[]>([{
         id: 0,
-        product: {productId: '',
+        info: {
+                product: {
+                    productName: '',
+                    productId: ''
+                },
                 qtd: 0
         },
     }]);
@@ -57,10 +66,13 @@ export default function Page() {
                     }
     
                     const data = await response.json();
-                    setProductsIds(data.map(e => {
-                        return(e.id)
+                    setProducts(data.map(e => {
+                        return({productName: e.nome, productId: e.id})
                     }))
-                    handleProductChange(data[0].id, 0);
+                    setProductsNames(data.map(e => {
+                        return(e.nome)
+                    }))
+                    handleProductChange(data[0].nome, 0);
                 } catch (error: any) {
                     setError(error.message);
                 }
@@ -88,10 +100,10 @@ export default function Page() {
                 colhxanim: false,
                 needsId:
                     itens.map(item => {{
-                        console.log(item.product.productId);
+                        console.log(Number(item.info.product.productId));
                         return({
-                            productId: Number(item.product.productId),
-                            qtd: Number(item.product.qtd)
+                            productId: Number(item.info.product.productId),
+                            qtd: Number(item.info.qtd)
                         })
                     }})
                 }),
@@ -111,7 +123,11 @@ export default function Page() {
     function handleAddButton(idOp : number) {
         setItens([...itens, {
             id: idOp,
-            product: {productId: productsIds[0],
+            info: {
+                    product: {
+                        productName: products[0].productName,
+                        productId: products[0].productId
+                    },
                     qtd: 0
             },
         }]);
@@ -126,21 +142,28 @@ export default function Page() {
         );
     }
 
-    function handleProductChange(id : string, index : number) {
-        const aux = itens.map((c, i) => {
+    function handleProductChange(name : string, index : number) {
+        const aux0 : product[] = products.filter(i => i.productName == name)
+        console.log(String(products[0].productName));
+        console.log(aux0);
+        console.log('here');
+        setItens(itens.map((c, i) => {
             if (i === index) {
               return ({
                 ...c,
-                product: {
-                    ...c.product,
-                    productId: Number(id),
+                info: {
+                    ...c.info,
+                    product: {
+                        productName: aux0[0].productName,
+                        productId: aux0[0].productId
+                    }
                 }
               });
             } else {
               return c;
             }
-        });
-        setItens(aux);
+        }));
+        console.log();
         console.log(itens);
     }
 
@@ -149,8 +172,8 @@ export default function Page() {
             if (i === index) {
               return ({
                 ...c,
-                product: {
-                    ...c.product,
+                info: {
+                    ...c.info,
                     qtd: qtd,
                 }
               });
@@ -172,7 +195,7 @@ export default function Page() {
                     handler={(e : React.FormEvent<HTMLInputElement>) => setName(e.currentTarget.value)}
                     />
                     <NumberInputFarm01
-                        text="Valor_Unidade"
+                        text="Valor Unidade"
                         value={price}
                         handler={(e : React.FormEvent<HTMLInputElement>) => setPrice(e.currentTarget.valueAsNumber)}
                     />
@@ -188,14 +211,14 @@ export default function Page() {
                                 <div className='flex flex-inline justify-center'>
                                     <SelectInput
                                         text= "Produto"
-                                        value={item.product.productId}
-                                        options={productsIds}
+                                        value={item.info.product.productName}
+                                        options={productsNames}
                                         handler={(e : React.FormEvent<HTMLInputElement>) => handleProductChange(e.currentTarget.value, item.id)}
                                     />
                                     <div className='ml-[100px] mr-[30px]'>
                                         <NumberInputFarm01
                                             text="Qtd"
-                                            value={item.product.qtd}
+                                            value={item.info.qtd}
                                             handler={(e : React.FormEvent<HTMLInputElement>) => handleQtdChange(e.currentTarget.valueAsNumber, item.id)}
                                         />
                                     </div>

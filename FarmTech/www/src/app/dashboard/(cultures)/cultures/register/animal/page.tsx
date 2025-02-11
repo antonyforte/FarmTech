@@ -14,11 +14,15 @@ import del from "@/public/image/Remove.png"
 
 interface product {
     productName: string |'',
+    productId: number | '',
+}
+interface info {
+    product: product,
     qtd: number | ''
 }
 interface item {
     id: number,
-    product: product
+    info: info
 }
 
 export default function Page() {
@@ -27,10 +31,15 @@ export default function Page() {
     const [name, setName] = useState('');
     const [price, setPrice] = useState<number | ''>('');
     const [clima, setClima] = useState('');
-    const [productsNames, setProductsNames] = useState<string[]>([]);
+    const [products, setProducts] = useState<product[]>([]);
+    const [productsNames, setProductsNames] = useState<string[] |''>([]);
     const [itens, setItens] = useState<item[]>([{
         id: 0,
-        product: {productName: '',
+        info: {
+                product: {
+                    productName: '',
+                    productId: ''
+                },
                 qtd: 0
         },
     }]);
@@ -57,6 +66,9 @@ export default function Page() {
                     }
     
                     const data = await response.json();
+                    setProducts(data.map(e => {
+                        return({productName: e.nome, productId: e.id})
+                    }))
                     setProductsNames(data.map(e => {
                         return(e.nome)
                     }))
@@ -88,10 +100,10 @@ export default function Page() {
                 colhxanim: true,
                 needsId:
                     itens.map(item => {{
-                        console.log(item.product.productName);
+                        console.log(Number(item.info.product.productId));
                         return({
-                            producName: String(item.product.productName),
-                            qtd: Number(item.product.qtd)
+                            productId: Number(item.info.product.productId),
+                            qtd: Number(item.info.qtd)
                         })
                     }})
                 }),
@@ -111,7 +123,11 @@ export default function Page() {
     function handleAddButton(idOp : number) {
         setItens([...itens, {
             id: idOp,
-            product: {productName: productsNames[0],
+            info: {
+                    product: {
+                        productName: products[0].productName,
+                        productId: products[0].productId
+                    },
                     qtd: 0
             },
         }]);
@@ -126,21 +142,28 @@ export default function Page() {
         );
     }
 
-    function handleProductChange(id : string, index : number) {
-        const aux = itens.map((c, i) => {
+    function handleProductChange(name : string, index : number) {
+        const aux0 : product[] = products.filter(i => i.productName == name)
+        console.log(String(products[0].productName));
+        console.log(aux0);
+        console.log('here');
+        setItens(itens.map((c, i) => {
             if (i === index) {
               return ({
                 ...c,
-                product: {
-                    ...c.product,
-                    productName: String(id),
+                info: {
+                    ...c.info,
+                    product: {
+                        productName: aux0[0].productName,
+                        productId: aux0[0].productId
+                    }
                 }
               });
             } else {
               return c;
             }
-        });
-        setItens(aux);
+        }));
+        console.log();
         console.log(itens);
     }
 
@@ -149,8 +172,8 @@ export default function Page() {
             if (i === index) {
               return ({
                 ...c,
-                product: {
-                    ...c.product,
+                info: {
+                    ...c.info,
                     qtd: qtd,
                 }
               });
@@ -167,12 +190,12 @@ export default function Page() {
                 <h1 className='text-4xl font-bold mb-[40px]'>Novo Animal</h1>
                 <div className='flex flex-col w-[920px]'>
                     <TextInputFarm01
-                    text="Colheita:"
+                    text="Animal:"
                     value={name}
                     handler={(e : React.FormEvent<HTMLInputElement>) => setName(e.currentTarget.value)}
                     />
                     <NumberInputFarm01
-                        text="Valor_Unidade"
+                        text="Valor Unidade"
                         value={price}
                         handler={(e : React.FormEvent<HTMLInputElement>) => setPrice(e.currentTarget.valueAsNumber)}
                     />
@@ -188,14 +211,14 @@ export default function Page() {
                                 <div className='flex flex-inline justify-center'>
                                     <SelectInput
                                         text= "Produto"
-                                        value={item.product.productName}
+                                        value={item.info.product.productName}
                                         options={productsNames}
                                         handler={(e : React.FormEvent<HTMLInputElement>) => handleProductChange(e.currentTarget.value, item.id)}
                                     />
                                     <div className='ml-[100px] mr-[30px]'>
                                         <NumberInputFarm01
                                             text="Qtd"
-                                            value={item.product.qtd}
+                                            value={item.info.qtd}
                                             handler={(e : React.FormEvent<HTMLInputElement>) => handleQtdChange(e.currentTarget.valueAsNumber, item.id)}
                                         />
                                     </div>

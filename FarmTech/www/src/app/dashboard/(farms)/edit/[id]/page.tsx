@@ -75,7 +75,7 @@ export default function Page({ params }: { params: { id: number } }) {
                     </div>
                 </div>
                 <Button01 text="Adicionar" path="#" />
-                {message && <p>{message}</p>}
+                {message && <p className="text-center w-[1000px] mt-4 text-red-500">{message}</p>}
             </div>
         </form>
     );

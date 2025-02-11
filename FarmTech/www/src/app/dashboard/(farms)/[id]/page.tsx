@@ -151,7 +151,7 @@ export default function Page({ params }: { params: { id: number } }) {
                     <h1 className="ml-[150px]">Endereço: {farm.address}</h1>
                 </div>
             </div>
-            <div className='flex flex-col mt-[20px] mb-[20px] h-[150px] w-[1000px]'>
+            <div className='flex flex-col mt-[20px] mb-[0px] h-[150px] w-[1000px]'>
                 <div className="flex mt-[30px] items-center">
                     <Button02
                     img = {add}
@@ -176,7 +176,6 @@ export default function Page({ params }: { params: { id: number } }) {
                         farmId={id}
                         handler={() => handleDeleteButton(e.id)}
                         type={list.type}
-                        colhxanim={e.agriculture.colhxanim}
                         />
                     )
                 })}

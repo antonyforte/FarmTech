@@ -29,20 +29,17 @@ export default function Product(props : any) {
     }
 
     return (
-        <div className="flex flex-inline h-[170px] w-[1000px] bg-neutral-700 mb-[3px] items-center">
-            <div className="w-[120px] h-[120px] border-[1px] border-neutral-400 bg-slate-900 ml-[30px] mr-[40px]">
-                
-            </div>
-            <div className="flex flex-col h-[160px] w-[700px] text-white pt-[20px]">
+        <div key={props.id} className="flex flex-inline h-[120px] w-[1000px] bg-neutral-700 mb-[3px] pl-[55px] pt-[20px] items-center">
+            <div className="flex flex-col h-[160px] w-[700px] text-white pt-[30px]">
                 <div>
                     <h1 className="text-2xl font-bold">{props.name}</h1>
                 </div>
-                <div className="flex flex-inline mt-[40px]">
+                <div className="flex flex-inline mt-[20px]">
                     <h1>ID: {props.id}</h1>
                     <h1 className="ml-[400px]">Preço: R${props.price.toFixed(2)}</h1>
                 </div>
             </div>
-            <div className="flex flex-col ml-[60px] h-[180px]">
+            <div className="flex flex-col ml-[130px] h-[120px]">
                 <button onClick={handleEdit}>
                     <Image className="mt-[30px] h-[40px] w-[40px]" src={edit} alt=""/>
                 </button>

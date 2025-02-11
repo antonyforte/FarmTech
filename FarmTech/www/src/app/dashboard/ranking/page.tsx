@@ -116,7 +116,7 @@ const RankingDisplay = () => {
     <div className="flex items-center w-full h-full justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-4xl bg-white p-8 rounded-xl shadow-md">
         <button
-          onClick={() => window.location.href = '/'}
+          onClick={() => window.location.href = '/dashboard'}
           className="bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-md mb-4"
         >
           Voltar

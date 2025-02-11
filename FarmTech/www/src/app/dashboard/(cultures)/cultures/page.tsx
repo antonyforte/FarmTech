@@ -10,7 +10,9 @@ import Item02 from '../../../components/item02';
 
 export default function Page() {
     const router = useRouter();
-    const [search, setSearch] = useState<string>("");
+    const [search01, setSearch01] = useState<string>("");
+    const [search02, setSearch02] = useState<string>("");
+    const [cultures, setCultures] = useState<any[]>([])
     const [list, setList] = useState<any[]>([]);
     const [error, setError] = useState<string | null>(null);
 
@@ -34,6 +36,7 @@ export default function Page() {
                 const data = await response.json();
                 console.log(data);
                 setList(data)
+                setCultures(data)
             } catch (error: any) {
                 setError(error.message);
             }
@@ -46,30 +49,29 @@ export default function Page() {
         router.push("/dashboard/cultures/register/"+ type);
     }
 
-    function handleDeleteButton(id : number) {
-        setList(
-            list.filter(item =>
-            item.tipo !== id
-            )
-        );
+    function handleChangeSearch01(searched_farm : string) {
+        setSearch01(searched_farm);
+        setList(cultures.filter(culture => (culture.nome.toLowerCase().includes(searched_farm.toLowerCase()) || culture.colhxanim == true)))
+
     }
 
-    function handleSearch(searched_farm : string) {
-        setSearch(searched_farm);
+    function handleChangeSearch02(searched_farm : string) {
+        setSearch02(searched_farm);
+        setList(cultures.filter(culture => (culture.nome.toLowerCase().includes(searched_farm.toLowerCase()) || culture.colhxanim == false)))
     }
 
     return (
         <div className='flex flex-col w-screen items-center'>
             <div>
-                <div className='flex flex-col mt-[20px] mb-[30px] h-[150px] w-[1000px]'>
+                <div className='flex flex-col mt-[20px] mb-[0px] h-[150px] w-[1000px]'>
                     <div className="flex mt-[30px] items-center">
                         <Button02
                         img = {add}
                         handler = {() => {handleAddButton("harvest")}}
                         />
                         <SearchBar
-                        value={search} 
-                        handler={(e : React.FormEvent<HTMLInputElement>) => {handleSearch(e.currentTarget.value)}}  
+                        value={search01} 
+                        handler01={(e : React.FormEvent<HTMLInputElement>) => {handleChangeSearch01(String(e.currentTarget.value))}}  
                         type="text" 
                         placeholder="Digite o nome do item..."
                         />
@@ -84,7 +86,6 @@ export default function Page() {
                                     <Item02
                                     name={e.nome}
                                     itemId={e.tipo}
-                                    handler={() => handleDeleteButton(e.tipo, e.colhxanim)}
                                     type="harvest"
                                     />
                                 )
@@ -93,15 +94,15 @@ export default function Page() {
                 </div>
             </div>
             <div>
-                <div className='flex flex-col mt-[20px] mb-[30px] h-[150px] w-[1000px]'>
+                <div className='flex flex-col mt-[20px] mb-[0px] h-[150px] w-[1000px]'>
                     <div className="flex mt-[30px] items-center">
                         <Button02
                         img = {add}
                         handler = {() => {handleAddButton("animal")}}
                         />
                         <SearchBar
-                        value={search} 
-                        handler={(e : React.FormEvent<HTMLInputElement>) => {handleSearch(e.currentTarget.value)}}  
+                        value={search02} 
+                        handler01={(e : React.FormEvent<HTMLInputElement>) => {handleChangeSearch02(String(e.currentTarget.value))}}  
                         type="text" 
                         placeholder="Digite o nome do item..."
                         />
@@ -115,7 +116,6 @@ export default function Page() {
                                 <Item02
                                 name={e.nome}
                                 itemId={e.tipo}
-                                handler={() => handleDeleteButton(e.tipo, e.colhxanim)}
                                 type="animal"
                                 />
                             )

@@ -4,12 +4,15 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Button02 from "@/app/components/button02";
 import Product from "../../../components/product";
+import SearchBar from "../../../components/searchBar";
 import add from "@/public/image/add.png"
 
 
 export default function Page() {
     const router = useRouter();
     const [products, setProducts] = useState([]);
+    const [list, setList] = useState([]);
+    const [search, setSearch] = useState<string | ''>("");
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
@@ -31,6 +34,7 @@ export default function Page() {
 
                 const data = await response.json();
                 setProducts(data);
+                setList(data);
             } catch (error: any) {
                 setError(error.message);
             }
@@ -43,29 +47,31 @@ export default function Page() {
         router.push("/dashboard/products/register");
     }
 
-    function handleDeleteButton(id : number) {
-        setProducts(
-            products.filter(item =>
-            item.id !== id
-            )
-        );
-    }
 
+    function handleChangeSearch(e : string) {
+        setSearch(e);
+        setList(products.filter(product => product.nome.toLowerCase().includes(e.toLowerCase())));
+    }
 
     return (
         <div className="flex flex-col pt-[40px]">
-            <div className="mb-[30px]">
+            <div className="flex flex-inline mb-[30px]">
                 <Button02
                 img = {add}
                 handler = {() => {handleAddButton()}}
                 />
+                <SearchBar
+                value={search} 
+                handler01={(e : React.FormEvent<HTMLInputElement>) => {handleChangeSearch(String(e.currentTarget.value))}}  
+                type="text" 
+                placeholder="Digite o nome do item..."
+                />
             </div>
-            {products.map(product => {
+            {list.map(product => {
                 return(
                     <Product
                     id={product.id}
                     name={product.nome}
-                    handler={() => handleDeleteButton(product.id)}
                     price={product.preco}
                     />
                 )

@@ -79,7 +79,7 @@ export default function Page() {
                 />
                 <Button01 text="Registrar" handler={() => {handleChangePage("#")}} />
             </form>
-            {message && <p className="text-center mt-4 text-red-500">{message}</p>}
+            {message && <p className="text-center w-[688px] mt-4 text-red-500">{message}</p>}
         </>
     );
 }

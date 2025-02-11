@@ -74,7 +74,7 @@ export default function Page() {
                     </div>
                 </div>
                 <Button01 text="Adicionar" path="localhost:3000/farms" />
-                {message && <p>{message}</p>}
+                {message && <p className="text-center w-[1000px] mt-4 text-red-500">{message}</p>}
             </div>
         </form>
     );

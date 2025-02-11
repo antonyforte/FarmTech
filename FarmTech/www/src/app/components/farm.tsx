@@ -35,7 +35,7 @@ export default function Farm(props : any) {
     }
 
     return (
-        <div className="flex flex-inline h-[200px] w-[1000px] bg-neutral-700 mb-[80px] items-center">
+        <div key={props.id} className="flex flex-inline h-[200px] w-[1000px] bg-neutral-700 mb-[80px] items-center">
             <div className="w-[250px] h-[150px] border-[1px] border-neutral-400 bg-slate-900 ml-[30px] mr-[40px]">
                 <Image className="w-[250px] h-[150px]" src={img} alt=""/>
             </div>
